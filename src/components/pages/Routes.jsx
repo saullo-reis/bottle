@@ -1,6 +1,6 @@
 import { Routes, Route} from 'react-router-dom'
 import { Login } from '../login'
-import { Register } from '../login/register'
+import { Register } from '../login/register/Register'
 import { Home } from '../home'
 
 export const AppRoutes = () => {
