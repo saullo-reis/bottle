@@ -9,14 +9,13 @@ const db = new sqlite3.Database('database.db', (err) => {
 
 db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
+  name TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL
 )`, (err) => {
     if(err){
         console.error(err.message)
     }
-    console.log('Tabela users criada')
 })
 
 export { db }
