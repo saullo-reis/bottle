@@ -2,9 +2,11 @@ import { useState } from 'react'
 import '../StyleLogin.sass'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
+import { sha256 } from 'js-sha256'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Register = () => {
-
     const navigate = useNavigate()
     const [data, setData] = useState({
         email: '',
@@ -15,27 +17,41 @@ export const Register = () => {
     async function handleSubmit(e) {
         e.preventDefault()
         if (data.email === '' || data.password === '') {
-            alert("Preencha todos os campos")
+            toast.error('Preencha todos os campos.')
             return
         }
-        try {
-            const response = await axios.post('http://localhost:3333/register', {
+
+        try{
+            await axios.post('http://localhost:3333/register', {
                 email: data.email,
                 name: data.name,
-                password: data.password
+                password: sha256(data.password)
             })
-
-            if (response.status === 200) {
-                navigate('/', { replace: true })
+            toast.success(`Usuário ${data.name} cadastrado com sucesso.`)
+            setTimeout(() => {
+                navigate('/')
+            }, 3000)
+            return
+        }catch(err){
+            switch (err.request.status){
+                case 500:
+                    toast.error(`Problema no servidor, reinicie a página.`)
+                    return
+                case 401:
+                    if (err.response.data.error === "SQLITE_CONSTRAINT: UNIQUE constraint failed: users.email") {
+                        toast.error('Email ja registrado')
+                        return
+                    }
+                    toast.error('Nome de usuário ja registrado.')
+                    return
             }
-        } catch (error) {
-            console.error(error)
         }
     }
 
     return (
         <section className="login">
             <h1 className="login-title">Bottle</h1>
+            <ToastContainer position='bottom-left' />
             <main className="login-container">
                 <h2 className="login-container-title">Registrar</h2>
                 <form className="login-container-form" onSubmit={handleSubmit}>
@@ -44,7 +60,7 @@ export const Register = () => {
                     <input type={'password'} placeholder={"Senha"} onChange={(e) => setData({ password: e.target.value, email: data.email, name: data.name })} ></input>
                     <input className='button' type={'submit'} value={'Registrar'}></input>
                 </form>
-                <Link to={'/register'}>Não tenho conta</Link>
+                <Link to={'/'}>Login</Link>
             </main>
 
         </section>

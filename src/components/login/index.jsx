@@ -2,6 +2,9 @@ import { useState } from 'react'
 import './StyleLogin.sass'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
+import { sha256 } from 'js-sha256'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login = () => {
 
@@ -19,22 +22,29 @@ export const Login = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3333/login', {
+            await axios.post('http://localhost:3333/login', {
                 email: data.email,
-                password: data.password
+                password: sha256(data.password)
             })
+            navigate('/Home')
+        }
+        catch (err) {
+            switch (err.request.status) {
+                case 500:
+                    toast.success(`Problema no servidor, reinicie a página.`)
+                    return
 
-            if (response.status === 200) {
-                navigate('/home', { replace: true })
+                case 401:
+                    toast.error('Senha ou email incorretos')
+                    return
             }
-        } catch (error) {
-            console.error(error)
         }
     }
 
     return (
         <section className="login">
             <h1 className="login-title">Bottle</h1>
+            <ToastContainer position='bottom-left' />
             <main className="login-container">
                 <h2 className="login-container-title">Login</h2>
                 <form className="login-container-form" onSubmit={handleSubmit}>
