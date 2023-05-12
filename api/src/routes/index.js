@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', (__, res) => {
     res.send('Hello World')
 })
 
@@ -14,12 +14,11 @@ router.post('/register', (req, res) => {
     const query = `INSERT INTO users (name, email, password) VALUES(?,?,?)`
     db.run(query, [name, email, password], function(err) {
         if(err){
-            return console.error(err.message)
+            return res.status(401).json({error: err.message})
         }
-        console.log(`Usuário ${name} inserido com sucesso.`)
+        console.log('Usuário registrado nome: ' + name)
+        res.send('Usuário'+name+'cadastrado')
     })
-
-    res.send({"register": "sucessfull"})
 })
 
 router.post('/login', (req, res) => {
@@ -34,7 +33,6 @@ router.post('/login', (req, res) => {
         if(!user || user.password !== password){
             return res.status(401).json({ error: 'Credenciais incorretos' })
         }
-
         const token = jwt.sign({ id: user.id, email: user.email }, '54333' );
         res.json({token});
     })
