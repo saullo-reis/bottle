@@ -4,9 +4,11 @@ import { Posts } from "./posts"
 
 export const Home = () => {
     return(
-        <section className="home">
+        <section className="home" >
             <Header/>
-            <Posts/>
+            <main style={{ minHeight: '88vh' }}>
+                <Posts />
+            </main>
             <Footer/>    
         </section>
     )
