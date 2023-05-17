@@ -5,9 +5,12 @@ import axios from 'axios'
 import { sha256 } from 'js-sha256'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { addData } from '../../store/PerfilData'
+import { useDispatch } from 'react-redux'
+
 
 export const Login = () => {
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [data, setData] = useState({
         email: '',
@@ -22,10 +25,11 @@ export const Login = () => {
         }
 
         try {
-            await axios.post('http://localhost:3333/login', {
+            const response = await axios.post('http://localhost:3333/login', {
                 email: data.email,
                 password: sha256(data.password)
             })
+            dispatch(addData(response.data))
             navigate('/Home')
         }
         catch (err) {
