@@ -38,11 +38,11 @@ export const Posts = () => {
         if (roundedMinutesAgo === 0) {
             return 'Postado agora'
         }
-        if(roundedMinutesAgo >= 60){
-            return `Postado há ${diff.asHours()} horas atrás`
+        if (roundedMinutesAgo >= 1440) {
+            return `Postado há ${Math.round(roundedMinutesAgo/1440)} dias atrás`
         }
-        if(roundedMinutesAgo >= 1440){
-            return `Postado há ${diff.asDays()} dias atrás`
+        if(roundedMinutesAgo >= 60){
+            return `Postado há ${Math.round(roundedMinutesAgo / 60) } horas atrás`
         }
         return `Postado há ${roundedMinutesAgo} minutos atrás`
     }
