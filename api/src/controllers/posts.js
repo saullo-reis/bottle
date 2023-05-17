@@ -16,7 +16,6 @@ const createPost = (req, res) => {
 const posts = (__, res) => {
     const query = 'SELECT * FROM posts'
     db.all(query, function(err, data){
-        console.log(data)
         if(err) return res.status(500).json({error: err.message})
         res.status(200).json(data.reverse())
     })

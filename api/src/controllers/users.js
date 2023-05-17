@@ -14,14 +14,13 @@ const register = (req, res) => {
 }
 
 const login = (req, res) => {
-    const q = 'SELECT id, email, password FROM users WHERE email = ?'
+    const q = 'SELECT id, email, password, photo, name FROM users WHERE email = ?'
     const { email, password } = req.body
 
     db.get(q, email, function (err, user) {
         if (err) return res.status(500).json({ error: 'Erro no servidor' })
         if (!user || user.password !== password) return res.status(401).json({ error: 'Credenciais incorretos' })
-        const token = jwt.sign({ id: user.id, email: user.email }, '54333');
-        return res.json({token});
+        return res.json(user);
     })
 }
 
