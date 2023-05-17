@@ -1,13 +1,17 @@
 import { BrowserRouter } from 'react-router-dom'
 import './GlobalStyle.sass'
 import { AppRoutes } from './components/pages/Routes'
+import { store } from './store'
+import { Provider} from 'react-redux'
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <AppRoutes/>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </Provider>
   )
 }
 
