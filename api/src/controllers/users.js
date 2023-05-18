@@ -24,5 +24,16 @@ const login = (req, res) => {
     })
 }
 
+const updatePhoto = (req, res) => {
+    const q = 'UPDATE users SET photo = ? WHERE id = ?';
+    const id = req.params.id; // Use req.params.id para obter o ID da rota
+    const photo = req.body.photo; // Use req.body.photo para obter a foto do corpo da requisição
 
-export { register, login }
+    db.run(q, [photo, id], function (err) {
+        if (err) return res.status(500).json({ error: 'Erro no servidor' });
+        return res.status(200).json(req.body);
+    });
+};
+
+
+export { register, login, updatePhoto }
