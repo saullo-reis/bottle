@@ -30,6 +30,7 @@ export const Login = () => {
                 password: sha256(data.password)
             })
             dispatch(addData(response.data))
+            localStorage.setItem('data', JSON.stringify(response.data));
             navigate('/Home')
         }
         catch (err) {

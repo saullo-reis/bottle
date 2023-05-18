@@ -1,21 +1,22 @@
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './PerfilStyle.sass'
 import ModalPhoto from './modal'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import React from 'react'
+import { addData } from '../../../store/PerfilData'
 
 export const Perfil = () => {
     const data = useSelector((state) => state.data)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [image, setImage] = useState('')
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('.')
-    },[data.photo])
+        dispatch(addData(JSON.parse(localStorage.data)))
+    },[data])
 
     async function handleClick(e) {
         e.preventDefault()
@@ -67,8 +68,7 @@ export const Perfil = () => {
                 </form>
             </ModalPhoto>
             <div className='perfil-photo' onClick={handleModalOpen}>
-                {!data.photo ? <img className='perfil-photo' src='https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'></img> : <img className='perfil-photo' src={!image ? data.photo : image}></img>}
-                
+                {!data.photo ? <img className='perfil-photo' src='https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'></img> : <img className='perfil-photo' src={!image ? data.photo : image}></img>} 
             </div>
             <h1 className='perfil-name'>Nome: {data.name}</h1>
             <h2 className='perfil-email'>Email: {data.email}</h2>

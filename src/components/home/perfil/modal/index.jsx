@@ -10,8 +10,8 @@ function ModalPhoto(props) {
 
     return (
         <div className="modal-overlay">
-            <div className="modal">
-                <button className="modal-close-button" style={{color: 'red'}}onClick={onClose}>X</button>
+            <div className='modal'>
+                <button className="modal-close-button" style={{color: 'red'}} onClick={onClose}>X</button>
                 <div className="modal-content">
                     {children}
                 </div>

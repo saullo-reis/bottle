@@ -3,12 +3,15 @@ import { useState } from "react"
 import './StylePosts.sass'
 import axios from "axios"
 import moment from "moment-timezone"
+import { useSelector } from "react-redux"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
     const [content, setContent] = useState('')
     const [refresh, setRefresh] = useState(0)
     const now = moment().tz("America/Sao_Paulo")
+    const user = useSelector((state) => state.data)
+
 
     useEffect(() => {
         async function fetchData() {
@@ -21,8 +24,8 @@ export const Posts = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         axios.post('http://localhost:3333/post', {
-            name: 'Teste',
-            photo: 'https://i.ibb.co/W0WFcvp/foto-minha-2.jpg',
+            name: user.name,
+            photo: user.photo,
             content: content
         })
         setRefresh(refresh + 1)

@@ -8,7 +8,7 @@ const sliceData = createSlice({
         email: '',
         password: '',
         name: '',
-        photo: ''
+        photo: 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'
     },
     reducers:{
         addData(state, action) {
@@ -16,7 +16,11 @@ const sliceData = createSlice({
             state.email = action.payload.email
             state.password = action.payload.password
             state.name = action.payload.name
-            state.photo = action.payload.photo
+            if(!action.payload.photo){
+                state.photo = 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'
+            }else{
+                state.photo = action.payload.photo
+            }
         },
     }
     
