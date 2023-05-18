@@ -7,7 +7,8 @@ const sliceData = createSlice({
         id: 0,
         email: '',
         password: '',
-        name: ''
+        name: '',
+        photo: ''
     },
     reducers:{
         addData(state, action) {
@@ -15,6 +16,7 @@ const sliceData = createSlice({
             state.email = action.payload.email
             state.password = action.payload.password
             state.name = action.payload.name
+            state.photo = action.payload.photo
         },
     }
     

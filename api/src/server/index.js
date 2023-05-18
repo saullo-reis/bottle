@@ -6,7 +6,7 @@ const server = express()
 
 server.use(cors({
     origin: 'http://127.0.0.1:5173',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
 server.use(express.json())

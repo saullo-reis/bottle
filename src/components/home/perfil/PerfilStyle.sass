@@ -11,27 +11,44 @@
     text-align: center
     &-photo
         width: 200px
-        border-radius: 100%
         cursor: pointer
+        border-radius: 8px
         transition: .7s
         position: relative
+        overflow: hidden
         &:hover
             filter: grayscale(100%)
         &::after
             content: ''
             position: absolute
-            background: url('https://cdn-icons-png.flaticon.com/512/1827/1827951.png')
+            background-image: url('https://cdn-icons-png.flaticon.com/512/1827/1827951.png')
+            background-size: cover
             display: none
-            width: 10px
-            height: 10px
+            width: 20px
+            height: 20px
             top: 50%
             left: 50%
             transform: translate(-50%, -50%)
             z-index: 5
-        &:hover::after 
+        &:hover::after
             display: block
     &-name
         font-size: 25px
         margin: 20px 0
     &-email
         font-size: 15px
+
+
+.form
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    &-submit
+        border: none
+        color: #fff
+        background-color: #22e
+        padding: 10px
+        border-radius: 8px
+        cursor: pointer
+        margin: 10px
