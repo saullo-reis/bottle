@@ -5,7 +5,7 @@
     align-items: center
     justify-content: center
     flex-direction: column
-    background-color: #0b0a0a
+    background-color: #777
     &-title
         color: #2218e0
         text-shadow: 0 0 3px black
@@ -14,7 +14,7 @@
         animation: slide .7s ease
         margin: 50px
     &-container
-        background-color: #121212
+        background-color: #ccc
         border-radius: 8px
         box-shadow: 1px 1px 5px black
         display: flex
@@ -26,8 +26,8 @@
         justify-content: flex-start
         animation: slide .7s ease
         &-title
-            color: #fff
-            text-shadow: 1px 1px 3px black
+            color: #2218e0
+            text-shadow: 0 0 3px black
         &-form
             display: flex
             flex-direction: column
@@ -50,6 +50,10 @@
                 background-color: #2218e0
                 margin: 30px
                 cursor: pointer
+                transition: 1s
+                &:hover
+                    box-shadow: 2px 2px 20px black
+                    transform: scale(1.1)
 
 @keyframes slide
     0%
