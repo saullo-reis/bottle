@@ -1,27 +1,41 @@
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import './PerfilStyle.sass'
 import ModalPhoto from './modal'
 import { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import React from 'react'
-import { addData } from '../../../store/PerfilData'
+import { useNavigate } from 'react-router-dom'
 
 export const Perfil = () => {
-    const data = useSelector((state) => state.data)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const [image, setImage] = useState('')
-    const dispatch = useDispatch();
-
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
+    const navigate = useNavigate()
+    
     useEffect(() => {
-        dispatch(addData(JSON.parse(localStorage.data)))
-    },[data])
+        if(!user) navigate('/')
+        async function fetchData() {
+            try {
+                const response = await axios.get('http://localhost:3333/getUser/', {
+                    params: {
+                        email: user.email
+                    }
+                })
+                localStorage.setItem('user', JSON.stringify(response.data)) // Armazena os dados atualizados do usuário no localStorage
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        fetchData();
+    }, [image]);
 
     async function handleClick(e) {
         e.preventDefault()
         try{
-            await axios.put('http://localhost:3333/update/' + data.id, {
+            await axios.put('http://localhost:3333/update/' + user.id, {
                 photo: selectedImage
             })
             setIsModalOpen(false);
@@ -68,10 +82,10 @@ export const Perfil = () => {
                 </form>
             </ModalPhoto>
             <div className='perfil-photo' onClick={handleModalOpen}>
-                {!data.photo ? <img className='perfil-photo' src='https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'></img> : <img className='perfil-photo' src={!image ? data.photo : image}></img>} 
+                {!user.photo ? <img className='perfil-photo' src='https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'></img> : <img className='perfil-photo' src={!image ? user.photo : image}></img>} 
             </div>
-            <h1 className='perfil-name'>Nome: {data.name}</h1>
-            <h2 className='perfil-email'>Email: {data.email}</h2>
+            <h1 className='perfil-name'>Nome: {user.name}</h1>
+            <h2 className='perfil-email'>Email: {user.email}</h2>
             <ToastContainer position='bottom-left'/>
         </section>
     )

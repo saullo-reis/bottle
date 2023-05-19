@@ -10,7 +10,8 @@ export const Posts = () => {
     const [content, setContent] = useState('')
     const [refresh, setRefresh] = useState(0)
     const now = moment().tz("America/Sao_Paulo")
-    const user = useSelector((state) => state.data)
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
@@ -23,13 +24,18 @@ export const Posts = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3333/post', {
-            name: user.name,
-            photo: user.photo,
-            content: content
-        })
-        setRefresh(refresh + 1)
-        setContent('')
+        setIsLoading(true)
+        setTimeout(() => {
+            axios.post('http://localhost:3333/post', {
+                name: user.name,
+                photo: user.photo,
+                content: content
+            })
+            setRefresh(refresh + 1)
+            setContent('')
+            setIsLoading(false)
+        }, 1000);
+        
     }
 
     const dateNow = (date) => {
@@ -56,6 +62,7 @@ export const Posts = () => {
                 <label className="post-label">O que você está pensando?</label>
                 <textarea placeholder="Escreva aqui" value={content} className="post-content" style={{ resize: "none" }}
                     onChange={(e) => setContent(e.target.value)}></textarea>
+                {isLoading && <div className="loading"></div>}
                 <input type={'submit'} style={{opacity: content === '' ? '60%' : '100%'}} className="post-button" value={'Enviar'}></input>
             </form>
             <ul className="posts">
