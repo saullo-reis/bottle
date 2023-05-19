@@ -20,7 +20,7 @@ const login = (req, res) => {
     db.get(q, email, function (err, user) {
         if (err) return res.status(500).json({ error: 'Erro no servidor' })
         if (!user || user.password !== password) return res.status(401).json({ error: 'Credenciais incorretos' })
-        return res.json(user);
+        return res.status(200).json(user);
     })
 }
 
@@ -35,5 +35,14 @@ const updatePhoto = (req, res) => {
     });
 };
 
+const getUser = (req, res) => {
+    const q = 'SELECT * FROM users WHERE email = ?'
+    const  email = req.query.email
 
-export { register, login, updatePhoto }
+    db.get(q, email, function (err, user) {
+        if (err) return res.status(500).json({ error: 'Erro no servidor' })
+        return res.status(200).json(user);
+    });
+};
+
+export { register, login, updatePhoto, getUser }

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { register, login, updatePhoto } from '../controllers/users.js'
+import { register, login, updatePhoto, getUser } from '../controllers/users.js'
 import { createPost, posts } from '../controllers/posts.js'
 
 const router = Router()
@@ -13,5 +13,6 @@ router.post('/login', login)
 router.post('/post', createPost)
 router.get('/posts', posts)
 router.put('/update/:id', updatePhoto)
+router.get('/getUser', getUser)
 
 export { router }
