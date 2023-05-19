@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../StyleLogin.sass'
+import '../Styles.sass'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { sha256 } from 'js-sha256'

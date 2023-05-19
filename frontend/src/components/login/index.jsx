@@ -1,16 +1,13 @@
 import { useState } from 'react'
-import './StyleLogin.sass'
+import './Styles.sass'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { sha256 } from 'js-sha256'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { addData } from '../../store/PerfilData'
-import { useDispatch } from 'react-redux'
 
 
 export const Login = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [data, setData] = useState({
         email: '',
@@ -29,8 +26,7 @@ export const Login = () => {
                 email: data.email,
                 password: sha256(data.password)
             })
-            dispatch(addData(response.data))
-            localStorage.setItem('data', JSON.stringify(response.data));
+            localStorage.setItem('user', JSON.stringify(response.data));
             navigate('/Home')
         }
         catch (err) {
