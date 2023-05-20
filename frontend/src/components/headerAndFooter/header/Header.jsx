@@ -1,4 +1,4 @@
-import { BiUserCircle } from 'react-icons/bi'
+import { ImMenu } from 'react-icons/im'
 import { useState } from 'react'
 import './StyleHeader.sass'
 
@@ -10,11 +10,12 @@ export const Header = () => {
     return(
         <section className="header">
             <h1 className="header-logo">Bottle</h1>
-            <BiUserCircle onClick={() => handleClick()}/>
+            <ImMenu onClick={() => handleClick()}/>
             <aside style={{display: show}}>
                 <p>Perfil</p>
                 <p>Amigos</p>
                 <p>Mensagens</p>
+                <p>Tema</p>
             </aside>
         </section>
     )
