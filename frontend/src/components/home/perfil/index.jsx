@@ -15,7 +15,7 @@ export const Perfil = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
-        if(!user) navigate('/')
+        if(!user.name) navigate('/')
         async function fetchData() {
             try {
                 const response = await axios.get('http://localhost:3333/getUser/', {
