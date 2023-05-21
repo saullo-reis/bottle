@@ -1,5 +1,5 @@
 import React from 'react';
-import './StyleModal.sass'
+import './UserModal.sass'
 
 function ModalPhoto(props) {
     const { isOpen, onClose, children } = props;
