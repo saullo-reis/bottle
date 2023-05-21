@@ -1,5 +1,4 @@
 import { db } from "../database/index.js"
-import jwt from 'jsonwebtoken'
 
 const register = (req, res) => {
     const q = 'INSERT INTO users (name, email, password, photo) VALUES (?, ?, ?, ?)'

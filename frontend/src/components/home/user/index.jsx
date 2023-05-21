@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { useSelector } from 'react-redux'
-import './PerfilStyle.sass'
+import './UserStyle.sass'
 import ModalPhoto from './modal'
 import { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'

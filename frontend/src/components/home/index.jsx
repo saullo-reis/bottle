@@ -1,6 +1,6 @@
 import { Footer } from "../headerAndFooter/footer/Footer"
 import { Header } from "../headerAndFooter/header/Header"
-import { Perfil } from "./perfil"
+import { Perfil } from "./user"
 import { Posts } from "./posts"
 import './style.sass'
 
