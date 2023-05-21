@@ -25,7 +25,8 @@ export const Register = () => {
             await axios.post('http://localhost:3333/register', {
                 email: data.email,
                 name: data.name,
-                password: sha256(data.password)
+                password: sha256(data.password),
+                photo: 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'
             })
             toast.success(`Usuário ${data.name} cadastrado com sucesso.`)
             setTimeout(() => {

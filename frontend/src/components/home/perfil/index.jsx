@@ -82,7 +82,7 @@ export const Perfil = () => {
             </ModalPhoto>
             <p className='perfil-info'>Clique na foto para editar.</p>
             <div className='perfil-photo' onClick={handleModalOpen}>
-                {!user.photo ? <img className='perfil-photo' src='https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'></img> : <img className='perfil-photo' src={!image ? user.photo : image}></img>} 
+                <img className='perfil-photo' src={!image ? user.photo : image}></img>
             </div>
             <h1 className='perfil-name'>{user.name}</h1>
             <h2 className='perfil-email'>Email: {user.email}</h2>

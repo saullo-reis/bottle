@@ -2,10 +2,10 @@ import { db } from "../database/index.js"
 import jwt from 'jsonwebtoken'
 
 const register = (req, res) => {
-    const q = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)'
-    const { name, email, password } = req.body
+    const q = 'INSERT INTO users (name, email, password, photo) VALUES (?, ?, ?, ?)'
+    const { name, email, password, photo } = req.body
 
-    db.run(q, [name, email, password], function (err) {
+    db.run(q, [name, email, password, photo], function (err) {
         if (err) return res.status(401).json({ error: err.message })
 
         console.log("Usuário registrado")
