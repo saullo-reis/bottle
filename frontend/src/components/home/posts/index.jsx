@@ -3,7 +3,7 @@ import { useState } from "react"
 import './StylePosts.sass'
 import axios from "axios"
 import moment from "moment-timezone"
-import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -35,7 +35,7 @@ export const Posts = () => {
             setContent('')
             setIsLoading(false)
         }, 1000);
-        
+
     }
 
     const dateNow = (date) => {
@@ -48,10 +48,10 @@ export const Posts = () => {
             return 'Postado agora'
         }
         if (roundedMinutesAgo >= 1440) {
-            return `Postado há ${Math.round(roundedMinutesAgo/1440)} dias atrás`
+            return `Postado há ${Math.round(roundedMinutesAgo / 1440)} dias atrás`
         }
-        if(roundedMinutesAgo >= 60){
-            return `Postado há ${Math.round(roundedMinutesAgo / 60) } horas atrás`
+        if (roundedMinutesAgo >= 60) {
+            return `Postado há ${Math.round(roundedMinutesAgo / 60)} horas atrás`
         }
         return `Postado há ${roundedMinutesAgo} minutos atrás`
     }
@@ -63,7 +63,7 @@ export const Posts = () => {
                 <textarea placeholder="Escreva aqui" value={content} className="post-content" style={{ resize: "none" }}
                     onChange={(e) => setContent(e.target.value)}></textarea>
                 {isLoading && <div className="loading"></div>}
-                <input type={'submit'} style={{opacity: content === '' ? '60%' : '100%'}} className="post-button" value={'Enviar'}></input>
+                <input type={'submit'} style={{ opacity: content === '' ? '60%' : '100%' }} className="post-button" value={'Enviar'}></input>
             </form>
             <ul className="posts">
                 {
@@ -71,7 +71,7 @@ export const Posts = () => {
                         return (
                             <li className="posts-post" key={index}>
                                 <div className="posts-post-container">
-                                    <img className="posts-post-container-img" src={element.photo}></img>
+                                    <Link to={'/perfil/' + element.name}><img className="posts-post-container-img" src={element.photo}></img> </Link>
                                     <p className="posts-post-container-name">{element.name}</p>
                                     <p className="posts-post-container-date">{dateNow(element.created_at)}</p>
                                 </div>
