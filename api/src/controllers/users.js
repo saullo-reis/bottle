@@ -35,10 +35,10 @@ const updatePhoto = (req, res) => {
 };
 
 const getUser = (req, res) => {
-    const q = 'SELECT * FROM users WHERE email = ?'
-    const  email = req.query.email
+    const q = 'SELECT * FROM users WHERE name = ?'
+    const  name = req.query.name
 
-    db.get(q, email, function (err, user) {
+    db.get(q, name, function (err, user) {
         if (err) return res.status(500).json({ error: 'Erro no servidor' })
         return res.status(200).json(user);
     });
