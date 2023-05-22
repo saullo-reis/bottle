@@ -19,7 +19,7 @@ export const Perfil = () => {
             try {
                 const response = await axios.get('http://localhost:3333/getUser/', {
                     params: {
-                        email: user.email
+                        name: user.name
                     }
                 })
                 localStorage.setItem('user', JSON.stringify(response.data)) // Armazena os dados atualizados do usuário no localStorage
