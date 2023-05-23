@@ -2,7 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { BiTrash, BiEdit } from 'react-icons/bi'
-import './styles.sass'
+import { Modal, ModalOverlay, ButtonCancel, ButtonConfirm, TextArea } from '../../../styles/stylesComponents.js'
+import { toast, ToastContainer } from 'react-toastify'
 
 export const PerfilPosts = () => {
     const [posts, setPosts] = useState([])
@@ -11,6 +12,7 @@ export const PerfilPosts = () => {
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
     const [id, setId] = useState(0)
     const user = JSON.parse(localStorage.getItem('user'))
+    const [newContent, setNewContent ] = useState('')
 
     useEffect(() => {
         async function fetchData() {
@@ -22,7 +24,7 @@ export const PerfilPosts = () => {
             setPosts(response.data)
         }
         fetchData()
-    }, [])
+    }, [isModalOpenDelete, isModalOpenEdit])
 
     const handleModalOpen = (id, mode) => {
         switch (mode) {
@@ -42,34 +44,67 @@ export const PerfilPosts = () => {
         setIsModalOpenEdit(false)
     };
 
+    async function handleDelete() {
+        try {
+            await axios.delete('http://localhost:3333/deletePost/' + id)
+            toast.success('Post deletado')
+            setIsModalOpenDelete(false)
+        } catch (err) {
+            console.error(err)
+        }
+
+    }
+    async function handleEditPost(){
+        try{
+            await axios.put('http://localhost:3333/editPost/'+id, {
+                content: newContent
+            })
+            toast.success('Post editado com sucesso')
+            setNewContent('')
+            setIsModalOpenEdit(false)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+
     return (
         <ul style={{ margin: '50px', width: '60%' }}>
+            <ToastContainer position="bottom-left" />
+            {
+                isModalOpenDelete &&
+                <ModalOverlay>
+                    <Modal>
+                        <p>Você tem certeza que quer deletar esse post?</p>
+                        <div>
+                            <ButtonConfirm type={'button'} onClick={() => handleDelete()} value='Confirmar'></ButtonConfirm>
+                            <ButtonCancel type={'button'} onClick={handleModalClose} value='Cancelar'></ButtonCancel>
+                        </div>
+                    </Modal>
+                </ModalOverlay>
+            }
+            {
+                isModalOpenEdit &&
+                <ModalOverlay>
+                    <Modal>
+                        <TextArea style={{width: '80%'}} placeholder="Escreva aqui" value={newContent} onChange={(e) => setNewContent(e.target.value)}></TextArea>
+                        <div>
+                            <ButtonConfirm type={'button'} onClick={() => handleEditPost()} value='Confirmar'></ButtonConfirm>
+                            <ButtonCancel type={'button'} onClick={handleModalClose} value='Cancelar'></ButtonCancel>
+                        </div>
+                    </Modal>
+                </ModalOverlay>
+            }
             <h1 style={{ textAlign: 'center' }}>Posts de {name}</h1>
             {
                 posts.map((element, index) => {
                     return (
                         <li className="posts-post" key={index}>
-                            <div className='posts-post-container' style={{ position: 'relative' }}>
+                            <div className='posts-post-container'>
                                 {element.name === user.name &&
                                     <>
-                                        <BiTrash  onClick={() => handleModalOpen(element.id, 'trash')} />
-                                        {
-                                            isModalOpenDelete &&
-                                            <div className="modal-delete" >
-                                                <p>Você tem certeza que quer deletar?</p>
-                                                <button>Confirmar</button>
-                                                <button onClick={handleModalClose}>Cancelar</button>
-                                            </div>
-                                        }
-
+                                        <BiTrash onClick={() => handleModalOpen(element.id, 'trash')} />
                                         <BiEdit onClick={() => handleModalOpen(element.id, 'edit')} />
-                                        {
-                                            isModalOpenEdit && 
-                                            <div className="modal-delete">
-                                                Você tem certeza que quer deletar?
-                                            </div>
-                                        }
-
                                     </>
                                 }
                             </div>
