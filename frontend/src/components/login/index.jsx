@@ -5,6 +5,7 @@ import axios from 'axios'
 import { sha256 } from 'js-sha256'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { ButtonConfirm } from '../../styles/stylesComponents'
 
 
 export const Login = () => {
@@ -51,7 +52,7 @@ export const Login = () => {
                 <form className="login-container-form" onSubmit={handleSubmit}>
                     <input type={'email'} placeholder={"Email"} onChange={(e) => setData({ email: e.target.value, password: data.password })} ></input>
                     <input type={'password'} placeholder={"Senha"} onChange={(e) => setData({ password: e.target.value, email: data.email })} ></input>
-                    <input className='button' type={'submit'} value={'Entrar'}></input>
+                    <ButtonConfirm style={{width: '120px'}} className='button' type={'submit'} value={'Entrar'}></ButtonConfirm>
                 </form>
                 <Link to={'/register'}>Não tenho conta</Link>
             </main>
