@@ -4,6 +4,7 @@ import './StylePosts.sass'
 import axios from "axios"
 import moment from "moment-timezone"
 import { Link } from "react-router-dom"
+import { ButtonConfirm, TextArea } from "../../../styles/stylesComponents"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -60,19 +61,18 @@ export const Posts = () => {
         <section className="main">
             <form className="post" onSubmit={handleSubmit}>
                 <label className="post-label">O que você está pensando?</label>
-                <textarea placeholder="Escreva aqui" value={content} className="post-content" style={{ resize: "none" }}
-                    onChange={(e) => setContent(e.target.value)}></textarea>
+                <TextArea placeholder="Escreva aqui" value={content} onChange={(e) => setContent(e.target.value)}></TextArea>
                 {isLoading && <div className="loading"></div>}
-                <input type={'submit'} style={{ opacity: content === '' ? '60%' : '100%' }} className="post-button" value={'Enviar'}></input>
+                <ButtonConfirm type={'submit'} style={{ opacity: content === '' ? '60%' : '100%', alignSelf:'flex-end' }} className="post-button" value={'Enviar'}></ButtonConfirm>
             </form>
             <ul className="posts">
                 {
                     posts.map((element, index) => {
                         return (
-                            <li className="posts-post" key={index}>
+                            <li className='posts-post' key={index}>
                                 <div className="posts-post-container">
                                     <Link to={'/perfil/' + element.name}><img className="posts-post-container-img" src={element.photo}></img> </Link>
-                                    <p className="posts-post-container-name">{element.name}</p>
+                                    <h3 className="posts-post-container-name">{element.name}</h3>
                                     <p className="posts-post-container-date">{dateNow(element.created_at)}</p>
                                 </div>
                                 <p className="posts-post-content">{element.content}</p>
