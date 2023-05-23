@@ -13,6 +13,7 @@ export const Header = () => {
         localStorage.setItem('user', JSON.stringify(userDefault))
         navigate('/')
     }
+    const user = JSON.parse(localStorage.getItem('user'))
 
 
     return (
@@ -20,7 +21,7 @@ export const Header = () => {
             <Link to={'/Home'}><h1 className="header-logo">Bottle</h1></Link>
             <ImMenu onClick={() => handleClick()} />
             <aside style={{ display: show }}>
-                <p>Perfil</p>
+                <Link to={'/perfil/'+user.name}>Perfil</Link>
                 <p>Amigos</p>
                 <p>Mensagens</p>
                 <p>Tema</p>
