@@ -22,7 +22,8 @@
     "react-router-dom": "^6.11.1",
     "react-toastify": "^9.1.2",
     "sass": "^1.62.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "styled-components": "^6.0.0-rc.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
