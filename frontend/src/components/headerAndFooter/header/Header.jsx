@@ -19,13 +19,13 @@ export const Header = () => {
     return (
         <section className="header">
             <Link to={'/Home'}><h1 className="header-logo">Bottle</h1></Link>
-            <ImMenu onClick={() => handleClick()} />
+            <button><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
                 <Link to={'/perfil/'+user.name}>Perfil</Link>
                 <p>Amigos</p>
                 <p>Mensagens</p>
                 <p>Tema</p>
-                <p onClick={() => handleLogout()}>Logout</p>
+                <p onClick={() => handleLogout()} style={{color: 'red'}}>Logout</p>
             </aside>
         </section>
     )
