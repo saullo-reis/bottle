@@ -12,7 +12,9 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
     name TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    photo BLOB
+    photo BLOB,
+    followers TEXT,
+    follows TEXT
 )`, (err) => {
     if (err) return console.error(err.message)
 

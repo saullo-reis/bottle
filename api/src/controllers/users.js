@@ -44,4 +44,13 @@ const getUser = (req, res) => {
     });
 };
 
-export { register, login, updatePhoto, getUser }
+const getUsers = (req, res) => {
+    const q = 'SELECT * FROM users'
+
+    db.all(q, function(err, users){
+        if(err) return res.status(500).json({error: 'Erro no servidor'})
+        return res.status(200).json(users)
+    })
+}
+
+export { register, login, updatePhoto, getUser, getUsers }
