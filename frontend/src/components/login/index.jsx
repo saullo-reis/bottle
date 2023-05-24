@@ -33,7 +33,7 @@ export const Login = () => {
         catch (err) {
             switch (err.request.status) {
                 case 500:
-                    toast.success(`Problema no servidor, reinicie a página.`)
+                    toast.error(`Problema no servidor, reinicie a página.`)
                     return
 
                 case 401:
