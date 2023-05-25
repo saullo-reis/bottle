@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import './UserStyle.sass'
+import styled from 'styled-components'
 
 export const PerfilUser = () => {
     const { name } = useParams()
@@ -21,10 +21,21 @@ export const PerfilUser = () => {
     },[])
 
     return(
-        <aside className="perfil-user" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px'}}>
-            <h1 className="perfil-user-name" >{user?.name}</h1>
-            <img className="perfil-user-image" src={user?.photo}></img>
-        </aside>
+        <PerfilUserStyle style={{display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px'}}>
+            <h1 >{user?.name}</h1>
+            <img src={user?.photo}></img>
+        </PerfilUserStyle>
         
     )
 }
+
+const PerfilUserStyle = styled.aside`
+    display: flex;
+    margin: 20px;
+    img{
+        width: 200px;
+        box-shadow: 4px 4px 0 black;
+        border: solid 1px black;
+    }
+
+`

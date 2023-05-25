@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import './StylePosts.sass'
 import axios from "axios"
 import moment from "moment-timezone"
 import { Link } from "react-router-dom"
 import { ButtonConfirm, TextArea } from "../../../styles/stylesComponents"
+import styled from "styled-components"
+import { PostsStyle } from "../../../styles/stylesComponents"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -58,30 +59,62 @@ export const Posts = () => {
     }
 
     return (
-        <section className="main">
-            <form className="post" onSubmit={handleSubmit}>
+        <section  style={{width: '70%'}}>
+            <PostContentStyle onSubmit={handleSubmit}>
                 <label className="post-label">O que você está pensando?</label>
                 <TextArea placeholder="Escreva aqui" value={content} onChange={(e) => setContent(e.target.value)}></TextArea>
-                {isLoading && <div className="loading"></div>}
+                {isLoading && <BarLoadingStyle></BarLoadingStyle>}
                 <ButtonConfirm type={'submit'} style={{ opacity: content === '' ? '60%' : '100%', alignSelf:'flex-end' }} className="post-button" value={'Enviar'}></ButtonConfirm>
-            </form>
-            <ul className="posts">
+            </PostContentStyle>
+            <PostsStyle>
                 {
                     posts.map((element, index) => {
                         return (
-                            <li className='posts-post' key={index}>
-                                <div className="posts-post-container">
-                                    <Link to={'/perfil/' + element.name}><img className="posts-post-container-img" src={element.photo}></img> </Link>
-                                    <h3 className="posts-post-container-name">{element.name}</h3>
-                                    <p className="posts-post-container-date">{dateNow(element.created_at)}</p>
+                            <li key={index}>
+                                <div>
+                                    <Link to={'/perfil/' + element.name}><img src={element.photo}></img> </Link>
+                                    <h3>{element.name}</h3>
+                                    <p>{dateNow(element.created_at)}</p>
                                 </div>
-                                <p className="posts-post-content">{element.content}</p>
+                                <p>{element.content}</p>
                             </li>
                         )
                     })
                 }
-            </ul>
-
+            </PostsStyle>
         </section>
     )
 }
+
+const BarLoadingStyle = styled.div`
+    width: 100%;
+    height: 5px;
+    background-color: #2218e0;
+    margin-bottom: 20px;
+    animation: loading 0.5s linear;
+
+    @keyframes loading{
+        0%{
+            width: 0%;
+        }
+        
+        50%{
+            width: 50%
+        }
+        
+        100%{
+            width: 100%
+        }
+    }      
+`
+
+const PostContentStyle = styled.form`
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    label{
+        color: #707070; 
+    }
+    
+            
+`

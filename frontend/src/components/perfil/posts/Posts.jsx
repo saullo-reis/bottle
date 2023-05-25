@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { BiTrash, BiEdit } from 'react-icons/bi'
-import { Modal, ModalOverlay, ButtonCancel, ButtonConfirm, TextArea } from '../../../styles/stylesComponents.js'
+import { Modal, ModalOverlay, ButtonCancel, ButtonConfirm, TextArea, PostsStyle } from '../../../styles/stylesComponents.js'
 import { toast, ToastContainer } from 'react-toastify'
 
 export const PerfilPosts = () => {
@@ -69,7 +69,7 @@ export const PerfilPosts = () => {
 
 
     return (
-        <ul style={{ margin: '50px', width: '60%' }}>
+        <PostsStyle style={{ margin: '50px', width: '60%' }}>
             <ToastContainer position="bottom-left" />
             {
                 isModalOpenDelete &&
@@ -113,6 +113,6 @@ export const PerfilPosts = () => {
                     )
                 })
             }
-        </ul>
+        </PostsStyle>
     )
 }
