@@ -1,27 +1,36 @@
 import { db } from "../database/index.js";
+import axios from 'axios'
 
-const addFollowers = (req, res) => {
-    const q = 'UPDATE users SET followers = ? WHERE id = ?'
+const getFollows = (req, res) => {
+    const queryGetFollows = 'SELECT follows FROM users WHERE id = ?'
 
-    const user = req.body
-    const id = req.params
+    const id = req.params.id
 
-    db.run(q, [user, id], function(err){
-        if(err) return res.status(500).json({error: 'Error server'})
-        return res.status(200).send('Atualizado a quantidade de followers')
+    db.get(queryGetFollows, id, function (err, response) {
+        if (err) res.status(500).send(err.message)
+        return res.status(200).send(JSON.stringify(response.follows))
     })
 }
 
-const addFollows = (req, res) => {
-    const q = 'UPDATE user SET follows = ? WHERE id = ?'
-
+const follow = async (req, res) => {
+    const queryFollows = 'UPDATE users SET follows = ? WHERE id = ?'
+    const id = req.params.id
     const user = req.body
-    const id = req.params
-
-    db.run(q, [user, id], function (err) {
-        if (err) return res.status(500).json({ error: 'Error server' })
-        return res.status(200).send('Atualizado a quantidade de follows')
-    })
+    const follows = await axios.get('http://localhost:3333/getFollows/' + id)
+    if (follows.data === null) {
+        db.run(queryFollows, [JSON.stringify([user]), id], function (err) {
+            if (err) return res.status(500).send(err.message)
+            return res.status(200).send('A pessoa do id ' + id + ' Seguiu ' + user.name)
+        })
+    } else {
+        const addFollow = JSON.parse(follows.data)
+        addFollow.push(user)
+        db.run(queryFollows, [JSON.stringify(addFollow), id], function (err) {
+            if (err) return res.status(500).send(err.message)
+            return res.status(200).send('A pessoa do id ' + id + ' Seguiu ' + user.name)
+        })
+    }
 }
+ 
 
-export { addFollowers, addFollows}
+export { follow, getFollows }

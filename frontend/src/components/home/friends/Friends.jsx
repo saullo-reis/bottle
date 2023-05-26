@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
+import { ToastContainer, toast} from 'react-toastify'
 
 export const FriendsAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -17,14 +18,19 @@ export const FriendsAdd = () => {
     },[])
 
     const handleClick = async (element) => {
-        console.log(element)
-        const follower = await axios.put('http://localhost:3333/addFollowers/'+element.id,{
-            user: JSON.stringify([...element.follower, user])
-        })
-        const follows = await axios.put('http://localhost:3333/addFollows/' + user.id,{
-            user: JSON.stringify([...user.follows, element])
-        })
-        console.log(follower, follows)
+        try{
+            await axios.put('http://localhost:3333/follow/' + user.id, {
+                id: element.id,
+                email: element.email,
+                photo: element.photo,
+                name: element.name
+            })
+            toast.success('Você seguiu '+ element.name)
+        }catch(err){
+            console.error(err)
+        }
+        
+        
     }
 
     return(
@@ -37,7 +43,7 @@ export const FriendsAdd = () => {
                             <li key={index}>
                                 <div>
                                     <p>{element.name}</p>
-                                    <img src={element.photo} alt="Imagem de pessoas que podem ser adicionadas" />
+                                    <img src={element.photo} />
                                 </div>
                                 <button onClick={() => handleClick(element)}>+</button>
                             </li>
@@ -46,6 +52,7 @@ export const FriendsAdd = () => {
                 }
             </ul>
         </Friends>
+        
     )
 }
 
