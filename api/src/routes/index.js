@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { register, login, updatePhoto, getUser, getUsers } from '../controllers/users.js'
 import { deletePost, editPost, getPosts } from '../controllers/perfil.js'
 import { createPost, posts } from '../controllers/posts.js'
-import { addFollowers, addFollows } from '../controllers/followers.js'
+import { addFollowers, addFollows } from '../controllers/follow.js'
 
 const router = Router()
 

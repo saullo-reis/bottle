@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-import { sha256 } from 'js-sha256'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { ButtonConfirm, LoginAndRegister } from '../../../styles/stylesComponents'
@@ -25,7 +24,7 @@ export const Register = () => {
             await axios.post('http://localhost:3333/register', {
                 email: data.email,
                 name: data.name,
-                password: sha256(data.password),
+                password: data.password,
                 photo: 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'
             })
             toast.success(`Usuário ${data.name} cadastrado com sucesso.`)

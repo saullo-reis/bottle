@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-import { sha256 } from 'js-sha256'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { ButtonConfirm } from '../../styles/stylesComponents'
@@ -25,7 +24,7 @@ export const Login = () => {
         try {
             const response = await axios.post('http://localhost:3333/login', {
                 email: data.email,
-                password: sha256(data.password)
+                password: data.password
             })
             localStorage.setItem('user', JSON.stringify(response.data));
             navigate('/Home')
