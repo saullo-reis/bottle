@@ -84,21 +84,24 @@ const LoginAndRegister = styled.section`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #D9D9D9;
+    background-color: #2f2e2e;
     h1{
         color: #2218e0;
         text-shadow: 0 0 3px black;
         font-weight: 700;
         font-size: 35px;
+        position: absolute;
         animation: slide .7s ease;
         margin-bottom: 20px;
     }
     main{
-        background-color: #C5C4C4;
+        background-color: #121212;
         border-radius: 8px;
         box-shadow: 1px 1px 5px black;
         width: 320px;
+        z-index: 3;
         display: flex;
+        position: absolute;
         padding: 50px;
         height: 320px;
         flex-direction: column;
@@ -108,8 +111,11 @@ const LoginAndRegister = styled.section`
         justify-content: center;
         animation: slide .7s ease;
         h2{
-            color: #2218e0;
+            color: #fff;
             text-shadow: 0 0 3px black;
+        }
+        a{
+            margin-top: 20px;
         }
         form{
             display: flex;
@@ -126,23 +132,38 @@ const LoginAndRegister = styled.section`
                 border-radius: 8px;
                 margin: 30px 14px 0;
                 &:focus{
+                    
                     outline: none
                 }
             }  
         }
     }    
+    @keyframes slide{
+        0%{
+            transform: translateX(200px);
+            opacity: 0;
+        }
+        100%{
+            transform: translateX(0);
+            opacity: 1;
+        }  
+    }
+    
 `
 
 const PostsStyle = styled.ul`
     display: flex;
     flex-direction: column;
     margin: 20px;
+    
     li{
         box-shadow: 4px 4px 0 black;
         margin: 40px 0;
         border: #000 solid 1px;
         border-radius: 9px;
         min-height: 230px;
+        background-color: #121212;
+        color: #fff;
         div{
             display: flex;
             align-items: center;

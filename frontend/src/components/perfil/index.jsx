@@ -8,7 +8,7 @@ export const Perfil = () => {
     return (
         <>
             <Header />
-            <section style={{display: 'flex'}}>
+            <section style={{ display: 'flex', backgroundColor: '#2F2E2E', minHeight: '100vh'}}>
                 <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', width: '40%'}}>
                     <PerfilUser />
                     <PerfilFriends />

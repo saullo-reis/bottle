@@ -16,7 +16,7 @@ const FooterStyle = styled.section`
     width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: #ccc;
+    background-color: #121212;
     p{
       color: #22e;
       text-shadow: none;

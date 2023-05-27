@@ -17,7 +17,7 @@ export const FriendsAdd = () => {
         fetchData()
     },[])
 
-    const handleClick = async (element) => {
+    const handleClick = async (element, index) => {
         try{
             await axios.put('http://localhost:3333/follow/' + user.id, {
                 id: element.id,
@@ -26,6 +26,8 @@ export const FriendsAdd = () => {
                 name: element.name
             })
             toast.success('Você seguiu '+ element.name)
+            const people = document.getElementsByClassName('people')
+            people[index].classList.add('animation')
         }catch(err){
             console.error(err)
         }
@@ -40,12 +42,12 @@ export const FriendsAdd = () => {
                 {
                     users.map((element, index) => {
                         return(
-                            <li key={index}>
+                            <li key={index} className="people" >
                                 <div>
-                                    <p>{element.name}</p>
                                     <img src={element.photo} />
+                                    <p>{element.name}</p>
                                 </div>
-                                <button onClick={() => handleClick(element)}>+</button>
+                                <button onClick={() => handleClick(element, index)}>+</button>
                             </li>
                         )
                     })
@@ -68,10 +70,14 @@ const Friends = styled.aside`
     overflow-y: auto;
     margin: 20px;
     padding: 10px;
-    background-color: #D9D9D9;
+    background-color: #121212;
     text-align: center;
+    .animation{
+        animation: slide ease forwards 1s
+    }
     h1{
-        color: #000;
+        color: #fff;
+        
     }
     ul{
         display: flex;
@@ -88,37 +94,55 @@ const Friends = styled.aside`
             margin: 20px 0;
             justify-content: space-between;
             align-items: center;
+            position: relative;
             width: 80%;
-            padding: 5px;
             div{
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 img{
                 width: 40px;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
                 }
                 p{
                     color: white;
                     font-size: 12px;
+                    text-align: center;
+                    
                 }
             }
             button{
-                background-color: #00f900;
                 border: none;
-                font-size: 25px;
+                font-size: 20px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-radius: 8px;
+                background: none;
                 color: white;
                 text-align: center;
-                border: solid 1px black;
-                box-shadow: 2px 2px 0 black;
-                padding: 5px 10px;
+                padding: 2px 5px;
                 cursor: pointer;
-                transition: .7s;
-                &:hover{
-                    transform: scale(0.95);
-                    box-shadow: 1px 1px 0 black;
-                }
+                transition: 0.7s;
+                    &:hover{
+                        color: #08ff08
+                    }
             }
         }
     }
     @media(max-width: 700px){
         display: none
+    }
+    @keyframes slide {
+        0%{
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100%{
+            transform: translateX(100px);
+            opacity: 0;
+        }
     }
 
 `

@@ -55,7 +55,7 @@ const PerfilFriendsStyle = styled.aside`
     ul{
         display: flex;
         flex-flow: row wrap;
-        background-color:#D9D9D9;
+        background-color:#121212;
         width: 100%;
         align-items: center;
         box-shadow: 4px 4px 0 black;

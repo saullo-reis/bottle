@@ -135,7 +135,8 @@ const PerfilUserStyle = styled.section`
     border-radius: 8px;
     max-height: 350px;
     padding: 10px;
-    background-color: #D9D9D9;
+    background-color: #121212;
+    color: #fff;
     text-align: center;
     p{
         font-size: 10px;

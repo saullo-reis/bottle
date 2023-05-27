@@ -64,7 +64,7 @@ export const Posts = () => {
                 <label className="post-label">O que você está pensando?</label>
                 <TextArea placeholder="Escreva aqui" value={content} onChange={(e) => setContent(e.target.value)}></TextArea>
                 {isLoading && <BarLoadingStyle></BarLoadingStyle>}
-                <ButtonConfirm type={'submit'} style={{ opacity: content === '' ? '60%' : '100%', alignSelf:'flex-end' }} className="post-button" value={'Enviar'}></ButtonConfirm>
+                <ButtonConfirm type={'submit'} style={{ opacity: content === '' ? '60%' : '100%', alignSelf:'flex-end', margin: '10px' }} className="post-button" value={'Enviar'}></ButtonConfirm>
             </PostContentStyle>
             <PostsStyle>
                 {

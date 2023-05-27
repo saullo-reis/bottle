@@ -36,7 +36,7 @@ const HeaderStyle = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #CCC;
+    background-color: #121212;
     color: #22e;
     text-shadow: 0 1px 2px black;
     button{
@@ -63,6 +63,8 @@ const HeaderStyle = styled.section`
     aside{
         position: absolute;
         right: 20px;
+        z-index: 4;
+        border: solid 1px black;
         top: 35px;
         display: flex;
         flex-direction: column;
