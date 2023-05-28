@@ -37,11 +37,25 @@ const ContentStyles = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    animation: dropContent 1s ease forwards;
     h1{
         color: #22e;
         font-size: 35px;
         margin: 0px 0px 30px;
         text-shadow: 4px 4px 5px black;
+    }
+    @keyframes dropContent {
+        0%{
+            opacity: 0;
+            transform: translateY(-300px);
+        }
+        50%{
+            transform: translateY(20px);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0)
+        }
     }
 
 `
