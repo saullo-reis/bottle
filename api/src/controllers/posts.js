@@ -1,10 +1,10 @@
 import { db } from "../database/index.js"
 
 const createPost = (req, res) => {
-    const query = "INSERT INTO posts (name, photo, content) VALUES (?, ?, ?)"
-    const { name, photo, content } = req.body
-
-    db.run(query, [name, photo, content], function(err) {
+    const query = "INSERT INTO posts (name, photo, content, idUser) VALUES (?, ?, ?, ?)"
+    const { name, photo, content, idUser } = req.body
+    console.log(idUser)
+    db.run(query, [name, photo, content, idUser], function(err) {
         if(err) {
             console.log(err.message)
             return res.send(err.message)

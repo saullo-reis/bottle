@@ -31,7 +31,8 @@ export const Posts = () => {
             axios.post('http://localhost:3333/post', {
                 name: user.name,
                 photo: user.photo,
-                content: content
+                content: content,
+                idUser: user.id
             })
             setRefresh(refresh + 1)
             setContent('')

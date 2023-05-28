@@ -18,7 +18,7 @@ export const PerfilPosts = () => {
         async function fetchData() {
             const response = await axios.get('http://localhost:3333/getPosts', {
                 params: {
-                    name: name
+                    idUser: user.id
                 }
             })
             setPosts(response.data)

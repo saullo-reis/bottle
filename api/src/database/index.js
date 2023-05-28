@@ -22,6 +22,7 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
 
 db.run(`CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    idUser INTEGER,
     name TEXT NOT NULL,
     photo TEXT NOT NULL,
     content TEXT NOT NULL,
