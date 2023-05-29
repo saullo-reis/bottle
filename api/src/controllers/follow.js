@@ -31,7 +31,7 @@ const follow = async (req, res) => {
         })
     }
 }
- 
+  
 const getFollowers = (req, res) => {
     const queryGetFollowers = 'SELECT followers FROM users WHERE id = ?'
 
@@ -53,14 +53,14 @@ const followers = async (req, res) => {
     if (followers.data === null) {
         db.run(queryFollowers, [JSON.stringify([user]), id], function (err) {
             if (err) return res.status(500).send(err.message)
-            return res.status(200).send('A pessoa do id ' + id + ' Seguiu ' + user.name)
+            return res.status(200).send('A pessoa do id ' + user.id + ' foi seguida por ' + id)
         })
     } else {
         const addFollowers = JSON.parse(followers.data)
         addFollowers.push(user)
         db.run(queryFollowers, [JSON.stringify(addFollowers), id], function (err) {
             if (err) return res.status(500).send(err.message)
-            return res.status(200).send('A pessoa do id ' + id + ' Seguiu ' + user.name)
+            return res.status(200).send('A pessoa do id ' + user.id + ' foi seguida por ' + id)
         })
     }
 }
