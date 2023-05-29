@@ -1,6 +1,21 @@
+import axios from 'axios'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 
 export const PerfilFriends = () => {
+
+    const { id } = useParams()
+    console.log(id)
+    useEffect(() => {
+        const fetchData =  async () => {
+            const arrayFollowers = await axios.all('http://localhost:3333/followers/'+user.id)
+            console.log(arrayFollowers)
+        }
+        fetchData()
+    },[])
+
+
     return(
         <PerfilFriendsStyle>
             <h1>Amigos</h1>

@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { register, login, updatePhoto, getUser, getUsers } from '../controllers/users.js'
 import { deletePost, editPost, getPosts } from '../controllers/perfil.js'
 import { createPost, posts } from '../controllers/posts.js'
-import { follow, getFollows } from '../controllers/follow.js'
+import { follow, getFollows, getFollowers, followers } from '../controllers/follow.js'
 
 const router = Router()
 
@@ -22,6 +22,8 @@ router.put('/editPost/:id', editPost )
 router.get('/getUsers', getUsers)
 router.put('/follow/:id', follow)
 router.get('/getFollows/:id', getFollows)
+router.put('/followers/:id', followers)
+router.get('/getFollowers/:id', getFollowers)
 
 
 export { router }

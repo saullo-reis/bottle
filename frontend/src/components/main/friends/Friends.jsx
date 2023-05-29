@@ -25,6 +25,12 @@ export const FriendsAdd = () => {
                 photo: element.photo,
                 name: element.name
             })
+            await axios.put('http://localhost:3333/followers/' + element.id, {
+                id: user.id,
+                email: user.email,
+                photo: user.photo,
+                name: user.name
+            })
             toast.success('Você seguiu '+ element.name)
             const people = document.getElementsByClassName('people')
             people[index].classList.add('animation')
