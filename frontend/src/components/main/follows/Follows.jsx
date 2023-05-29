@@ -11,6 +11,8 @@ export const FriendsAdd = () => {
     useEffect(() => {
         async function fetchData(){
             const response = await axios.get('http://localhost:3333/getUsers')
+            const followers = await axios.all('http://localhost:3333/getFollows/'+user)
+            console.log(followers)
             const peoples = response.data.filter(element => (element.name !== user.name))
             setUsers(peoples)
         }
