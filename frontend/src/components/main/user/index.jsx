@@ -6,6 +6,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ButtonCancel, ButtonConfirm } from '../../../styles/stylesComponents'
 import { styled } from 'styled-components'
+import canvas from 'canvas'
 
 export const Perfil = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,21 +32,45 @@ export const Perfil = () => {
         fetchData();
     }, [image]);
 
+    function resizeImage(inputImage, outputWidth, outputHeight) {
+        return new Promise((resolve, reject) => {
+            const canvas = document.createElement("canvas")
+            const ctx = canvas.getContext('2d')
+
+            const img = new Image()
+            img.onload = function () {
+                canvas.width = outputWidth
+                canvas.height = outputHeight
+
+                ctx.drawImage(img, 0, 0, outputWidth, outputHeight)
+
+                const resizedImage = canvas.toDataURL("image/jpeg")
+
+                resolve(resizedImage)
+            }
+
+            img.onerror = reject
+            img.src = inputImage
+        })
+    }
+
     async function handleClick(e) {
         e.preventDefault()
-        try {
-            await axios.put('http://localhost:3333/update/' + user.id, {
-                photo: selectedImage
+        resizeImage(selectedImage, 300, 300)
+            .then((resizedImage) => {
+                axios.put('http://localhost:3333/update/' + user.id, {
+                    photo: resizedImage
+                })
+                setIsModalOpen(false);
+                toast.success('Foto atualizada com sucesso!')
+                setImage(resizedImage)
             })
-            setIsModalOpen(false);
-            toast.success('Foto atualizada com sucesso!')
-            setImage(selectedImage)
-        } catch (err) {
-            if (err.message === 'Request failed with status code 413') {
-                toast.error('Imagem muito grande')
-            }
-            console.error(err.message)
-        }
+            .catch ((err) =>  {
+                if (err.message === 'Request failed with status code 413') {
+                    toast.error('Imagem muito grande')
+                }
+                console.error(err.message)
+            })
 
     }
 
@@ -70,6 +95,8 @@ export const Perfil = () => {
     function handleModalClose() {
         setIsModalOpen(false);
     }
+
+    console.log(selectedImage)
 
     return (
         <PerfilUserStyle>
