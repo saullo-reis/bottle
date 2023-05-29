@@ -21,7 +21,7 @@ export const Header = () => {
             <Link to={'/Home'}><h1 className="header-logo">Bottle</h1></Link>
             <button><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
-                <Link to={'/perfil/' + user.name}>Perfil</Link>
+                <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
                 <p>Amigos</p>
                 <p>Mensagens</p>
                 <p>Tema</p>
