@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ButtonConfirm } from '../../../styles/stylesComponents'
+import { ButtonCancel, ButtonConfirm } from '../../../styles/stylesComponents'
 import { styled } from 'styled-components'
 
 export const Perfil = () => {
@@ -78,6 +78,7 @@ export const Perfil = () => {
                 <form onSubmit={handleClick} className='form'>
                     <input className='form-file' type={'file'} accept="image/*" onChange={handleImageChange}></input>
                     <ButtonConfirm type={'submit'} value={'Atualizar foto'}></ButtonConfirm>
+                    <ButtonCancel onClick={handleModalClose} value={'Cancelar'}></ButtonCancel>
                 </form>
             </ModalPhoto>
             <p className='perfil-info'>Clique na foto para editar.</p>

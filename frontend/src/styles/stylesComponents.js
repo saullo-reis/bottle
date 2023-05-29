@@ -37,6 +37,7 @@ const ButtonCancel = styled.input`
     background-color: #ff2020;
     margin: 30px;
     cursor: pointer;
+    text-align: center;
     transition: 1s;
     box-shadow: 5px 5px 0px #000000;
     border: 1px solid #000000;

@@ -35,9 +35,11 @@ const HeaderStyle = styled.section`
     width: 100%;
     display: flex;
     align-items: center;
+    position: fixed;
     justify-content: space-between;
     background-color: #121212;
     color: #22e;
+    z-index: 999;
     text-shadow: 0 1px 2px black;
     button{
         border: none;
