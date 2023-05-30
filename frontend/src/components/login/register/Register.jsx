@@ -29,7 +29,7 @@ export const Register = () => {
             })
             toast.success(`Usuário ${data.name} cadastrado com sucesso.`)
             setTimeout(() => {
-                navigate('/')
+                navigate('/login')
             }, 3000)
             return
         }catch(err){
@@ -60,7 +60,7 @@ export const Register = () => {
                     <input type={'password'} placeholder={"Senha"} onChange={(e) => setData({ password: e.target.value, email: data.email, name: data.name })} ></input>
                     <ButtonConfirm style={{ width: '120px' }} type={'submit'} value={'Registrar'}></ButtonConfirm>
                 </form>
-                <Link to={'/'}>Login</Link>
+                <Link to={'/login'}>Login</Link>
             </main>
 
         </LoginAndRegister>

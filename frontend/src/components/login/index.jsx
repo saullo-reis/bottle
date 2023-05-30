@@ -98,6 +98,8 @@ const LoginAndRegister = styled.section`
         }
         a{
             margin-top: 20px;
+            color: gray;
+            font-size: 10px
         }
         form{
             display: flex;
