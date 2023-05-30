@@ -5,13 +5,18 @@ import { styled } from 'styled-components'
 
 export const PerfilFriends = () => {
     const [followers, setFollowers] = useState([])
+    const [follows, setFollows] = useState([])
     const { id } = useParams()
+    const [windowFollow, setWindowFollow ] = useState('followers')
+
     console.log(id)
     useEffect(() => {
         const fetchData =  async () => {
             try{
                 const arrayFollowers = await axios.get('http://localhost:3333/getFollowers/' + id)
                 setFollowers(JSON.parse(arrayFollowers.data))
+                const arrayFollows = await axios.get('http://localhost:3333/getFollows/' + id)
+                setFollows(JSON.parse(arrayFollows.data))
             }catch(err){
                 console.error(err)
             }
@@ -20,23 +25,46 @@ export const PerfilFriends = () => {
         fetchData()
     },[])
 
+    const changeWindow = (path) => setWindowFollow(path)
+
+
     return(
         <PerfilFriendsStyle>
-            <h1>Amigos</h1>
-            <ul className="perfil-friends-container">
-                {
-                    followers.map((element) => {
-                        return(
-                            <li key={element.id}>
-                                <Link to={`/perfil/${element.name}/${element.id}`}>
-                                    <img src={element.photo}></img>
-                                </Link>
-                            </li>
-                        )
-                        
-                    })
-                }
-            </ul>
+            <div>
+                <button onClick={() => changeWindow('followers')} style={{borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers.length} Seguidores</button>
+                <button onClick={() => changeWindow('follows')} style={{ borderBottom: windowFollow === 'follows' && '2px solid #2222EE' }}>{follows.length} Seguidores</button>
+            </div>
+
+            {
+                windowFollow === 'followers' ? <ul className="perfil-friends-container">
+                    {
+                        followers?.map((element) => {
+                            return (
+                                <li key={element.id}>
+                                    <Link to={`/perfil/${element.name}/${element.id}`}>
+                                        <img src={element.photo}></img>
+                                    </Link>
+                                </li>
+                            )
+
+                        })
+                    }
+                </ul> : <ul className="perfil-friends-container">
+                    {
+                        follows?.map((element) => {
+                            return (
+                                <li key={element.id}>
+                                    <Link to={`/perfil/${element.name}/${element.id}`}>
+                                        <img src={element.photo}></img>
+                                    </Link>
+                                </li>
+                            )
+
+                        })
+                    }
+                </ul>
+            }
+            
         </PerfilFriendsStyle>
     )
 }
@@ -47,7 +75,18 @@ const PerfilFriendsStyle = styled.aside`
     align-items: center;
     justify-content: center;
     color: white;
-    padding: 30px;
+    width: 200px;
+    div{
+        display: flex;
+        button{
+            background: none;
+            font-size: 10px;
+            margin: 0 10px;
+            color: #AAAAAA;
+            border:none;
+            cursor: pointer;
+        }
+    }
     h1{
         background-color: #22e;
         width: 100%;
@@ -65,12 +104,8 @@ const PerfilFriendsStyle = styled.aside`
         background-color:#121212;
         width: 100%;
         align-items: center;
-        box-shadow: 4px 4px 0 black;
-        border: solid 1px black;
         padding: 20px;
         justify-content: center;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
         max-height: 200px;
         max-width: 300px;
         overflow-y: auto;

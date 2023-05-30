@@ -69,7 +69,7 @@ export const PerfilPosts = () => {
 
 
     return (
-        <PostsStyle style={{ margin: '50px', width: '60%' }}>
+        <PostsStyle style={{ width: '60%' }}>
             <ToastContainer position="bottom-left" />
             {
                 isModalOpenDelete &&
@@ -95,7 +95,7 @@ export const PerfilPosts = () => {
                     </Modal>
                 </ModalOverlay>
             }
-            <h1 style={{ textAlign: 'center' }}>Posts de {name}</h1>
+            
             {
                 posts.map((element, index) => {
                     return (
