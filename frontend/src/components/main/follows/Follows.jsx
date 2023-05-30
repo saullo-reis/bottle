@@ -72,7 +72,7 @@ export const FriendsAdd = () => {
                                     <img src={element.photo} />
                                     <p>{element.name}</p>
                                 </div>
-                                <button onClick={() => handleClick(element, index)}>+</button>
+                                <button onClick={() => handleClick(element, index)}>Seguir</button>
                             </li>
                         )
                     })
@@ -88,12 +88,10 @@ const Friends = styled.aside`
     flex-direction: column;
     align-items: center;
     width: 300px;
-    box-shadow: 4px 4px 0 black;
     border: solid 1px black;
-    border-radius: 8px;
     max-height: 350px;
     overflow-y: auto;
-    margin: 20px;
+    margin: 100px 15px;
     padding: 10px;
     background-color: #121212;
     text-align: center;
@@ -140,18 +138,17 @@ const Friends = styled.aside`
             button{
                 border: none;
                 font-size: 20px;
-                position: absolute;
-                top: 0;
-                right: 0;
                 border-radius: 8px;
+                font-size: 10px;
                 background: none;
+                margin-right: 5px ;
                 color: white;
                 text-align: center;
                 padding: 2px 5px;
                 cursor: pointer;
                 transition: 0.7s;
                     &:hover{
-                        color: #08ff08
+                        background-color: #121212
                     }
             }
         }

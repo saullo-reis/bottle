@@ -112,7 +112,9 @@ const BarLoadingStyle = styled.div`
 const PostContentStyle = styled.form`
     display: flex;
     flex-direction: column;
-    margin: 20px;
+    border: solid black 1px;
+    padding: 30px;
+    padding-top: 100px;
     label{
         color: #707070; 
     }

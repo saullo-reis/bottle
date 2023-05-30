@@ -31,7 +31,6 @@ const MainStyle = styled.section`
         display: flex;
         justify-content: space-between;
         width: 93vw;
-        padding: 100px
     }
 
     @media ( max-width: 800px ){

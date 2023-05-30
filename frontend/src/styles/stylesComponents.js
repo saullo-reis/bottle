@@ -157,8 +157,8 @@ const LoginAndRegister = styled.section`
 const PostsStyle = styled.ul`
     display: flex;
     flex-direction: column;
-    margin: 20px;
-    
+    border: solid 1px black;
+    padding: 20px;
     li{
         box-shadow: 4px 4px 0 black;
         margin: 40px 0;

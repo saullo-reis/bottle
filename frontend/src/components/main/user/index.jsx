@@ -3,10 +3,12 @@ import ModalPhoto from './modal'
 import { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ButtonCancel, ButtonConfirm } from '../../../styles/stylesComponents'
 import { styled } from 'styled-components'
-import canvas from 'canvas'
+import { IoIosNotifications } from 'react-icons/io'
+import { HiUser } from 'react-icons/hi'
+import { RiLogoutBoxRFill } from 'react-icons/ri'
 
 export const Perfil = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -113,17 +115,22 @@ export const Perfil = () => {
                 <img className='perfil-photo' src={!image ? user.photo : image}></img>
             </PhotoHoverStyle>
             <h1 className='perfil-name'>{user.name}</h1>
-            <h2 className='perfil-email'>Email: {user.email}</h2>
+            <nav>
+                <Link to={'/perfil/'+user.name+'/'+user.id}><HiUser/> Perfil</Link>
+                <p><IoIosNotifications />   Notificações</p>
+                <p onClick={() => handleLogout()}><RiLogoutBoxRFill/>  Logout</p>
+            </nav>
             <ToastContainer position='bottom-left' />
         </PerfilUserStyle>
     )
 }
 
 const PhotoHoverStyle = styled.div`
-        width: 200px;
+        width: 170px;
         cursor: pointer;
-        border-radius: 8px;
         transition: .7s;
+        box-shadow: 4px 4px 0 black;
+        border: solid 1px black;
         position: relative;
         overflow: hidden;
         img{
@@ -155,24 +162,34 @@ const PhotoHoverStyle = styled.div`
 const PerfilUserStyle = styled.section`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    margin: 20px;
-    box-shadow: 4px 4px 0 black;
-    border: solid 1px black;
-    border-radius: 8px;
+    margin: 100px 15px;
     max-height: 350px;
     padding: 10px;
-    background-color: #121212;
     color: #fff;
-    text-align: center;
+    nav{
+        a, p{
+            color: #fff;
+            cursor: pointer;
+            margin: 5px 0;
+            font-size: 15px;
+            transition: .3s;
+            border-radius: 8px;
+            padding: 3px;
+            &:hover{
+                background-color: #222EEE;
+            }
+        }
+    }
     p{
         font-size: 10px;
         color: gray;
+        align-self: center;
     }     
     h1{
         font-size: 25px;
-        margin: 20px 0;
+        margin-top: 10px;
         text-shadow: 0 0 2px black;
     }
     h2{
