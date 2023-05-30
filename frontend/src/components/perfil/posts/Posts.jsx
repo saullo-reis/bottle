@@ -7,10 +7,10 @@ import { toast, ToastContainer } from 'react-toastify'
 
 export const PerfilPosts = () => {
     const [posts, setPosts] = useState([])
-    const { name } = useParams()
+    const { name, id } = useParams()
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
-    const [id, setId] = useState(0)
+    const [idPost, setIdPost] = useState(0)
     const user = JSON.parse(localStorage.getItem('user'))
     const [newContent, setNewContent ] = useState('')
 
@@ -18,22 +18,22 @@ export const PerfilPosts = () => {
         async function fetchData() {
             const response = await axios.get('http://localhost:3333/getPosts', {
                 params: {
-                    idUser: user.id
+                    idUser: id
                 }
             })
             setPosts(response.data)
         }
         fetchData()
-    }, [isModalOpenDelete, isModalOpenEdit])
+    }, [isModalOpenDelete, isModalOpenEdit, name])
 
     const handleModalOpen = (id, mode) => {
         switch (mode) {
             case 'trash':
-                setId(id)
+                setIdPost(id)
                 setIsModalOpenDelete(true)
                 return
             case 'edit':
-                setId(id)
+                setIdPost(id)
                 setIsModalOpenEdit(true)
                 return
         }
@@ -46,7 +46,7 @@ export const PerfilPosts = () => {
 
     async function handleDelete() {
         try {
-            await axios.delete('http://localhost:3333/deletePost/' + id)
+            await axios.delete('http://localhost:3333/deletePost/' + idPost)
             toast.success('Post deletado')
             setIsModalOpenDelete(false)
         } catch (err) {
@@ -56,7 +56,7 @@ export const PerfilPosts = () => {
     }
     async function handleEditPost(){
         try{
-            await axios.put('http://localhost:3333/editPost/'+id, {
+            await axios.put('http://localhost:3333/editPost/'+idPost, {
                 content: newContent
             })
             toast.success('Post editado com sucesso')

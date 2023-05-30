@@ -18,7 +18,7 @@ export const PerfilUser = () => {
             setUser(response.data)
         }
         fetchData()
-    },[])
+    },[name])
 
     return(
         <PerfilUserStyle style={{display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px'}}>
