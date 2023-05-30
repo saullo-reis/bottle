@@ -11,7 +11,7 @@ export const Home = () => {
             <Drop/> 
             <ContentStyles>
                 <h1>Bottle</h1>
-                <div>
+                <div style={{ animationDelay: '0.5s' }}>
                     <ButtonStyle onClick={() => handleClick('/login')}>Login</ButtonStyle>
                     <ButtonStyle onClick={() => handleClick('/register')}>Register</ButtonStyle>
                 </div>
@@ -37,8 +37,13 @@ const ContentStyles = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    animation: dropContent 1s ease forwards;
+    div{
+        animation: dropContent 1s ease forwards;
+        opacity: 0;
+    }
     h1{
+        animation: dropContent 1s ease forwards;
+        opacity: 0;
         color: #22e;
         font-size: 35px;
         margin: 0px 0px 30px;
@@ -47,10 +52,10 @@ const ContentStyles = styled.div`
     @keyframes dropContent {
         0%{
             opacity: 0;
-            transform: translateY(-300px);
+            transform: translateY(300px);
         }
         50%{
-            transform: translateY(20px);
+            transform: translateY(-20px);
         }
         100%{
             opacity: 1;
