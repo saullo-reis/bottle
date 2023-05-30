@@ -2,23 +2,40 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
-import { ToastContainer, toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 
 export const FriendsAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [users, setUsers ] = useState([])
-
+   
     useEffect(() => {
-        async function fetchData(){
-            const response = await axios.get('http://localhost:3333/getUsers')
-            const followers = await axios.all('http://localhost:3333/getFollows/'+user)
-            console.log(followers)
-            const peoples = response.data.filter(element => (element.name !== user.name))
-            setUsers(peoples)
+        async function fetchData() {
+            const allUsers = await axios.get('http://localhost:3333/getUsers');
+            const getFollows = await axios.get('http://localhost:3333/getFollows/' + user.id)
+            const follows = JSON.parse(getFollows.data)
+            if(follows === null){
+                setUsers(allUsers.data.filter(element => element.id !== user.id))
+            }else{
+                const response = allUsers.data.filter(element => {
+                    if (element.id === user.id) return false
+                    for (let i = 0; i < follows?.length; i++) {
+                        console.log(follows[i].id)
+                        if (element.id === follows[i].id) return false
+
+                    }
+                    return true;
+                });
+
+                console.log(response);
+                setUsers(response);
+            }
+            
         }
-        fetchData()
+
+        fetchData();
     },[])
 
+    console.log(users)
     const handleClick = async (element, index) => {
         try{
             await axios.put('http://localhost:3333/follow/' + user.id, {

@@ -8,6 +8,7 @@ const getFollows = (req, res) => {
 
     db.get(queryGetFollows, id, function (err, response) {
         if (err) res.status(500).send(err.message)
+        if (response === undefined) return res.status(200)
         return res.status(200).send(JSON.stringify(response.follows))
     })
 }
@@ -39,7 +40,7 @@ const getFollowers = (req, res) => {
 
     db.get(queryGetFollowers, id, function (err, response) {
         if (err) res.status(500).send(err.message)
-        console.log(response)
+        if(response === undefined) return res.status(200)
         return res.status(200).send(JSON.stringify(response.followers))
     })
 }
