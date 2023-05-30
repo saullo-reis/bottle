@@ -117,6 +117,8 @@ const LoginAndRegister = styled.section`
         }
         a{
             margin-top: 20px;
+            color: gray;
+            font-size: 10px;
         }
         form{
             display: flex;
@@ -141,7 +143,7 @@ const LoginAndRegister = styled.section`
     }    
     @keyframes slide{
         0%{
-            transform: translateX(200px);
+            transform: translateX(-200px);
             opacity: 0;
         }
         100%{
