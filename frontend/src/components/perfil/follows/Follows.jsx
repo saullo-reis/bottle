@@ -9,7 +9,6 @@ export const PerfilFriends = () => {
     const { id } = useParams()
     const [windowFollow, setWindowFollow ] = useState('followers')
 
-    console.log(id)
     useEffect(() => {
         const fetchData =  async () => {
             try{
@@ -26,7 +25,6 @@ export const PerfilFriends = () => {
     },[id])
 
     const changeWindow = (path) => setWindowFollow(path)
-    console.log(followers)
 
     return(
         <PerfilFriendsStyle>

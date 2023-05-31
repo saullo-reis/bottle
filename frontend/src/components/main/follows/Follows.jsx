@@ -19,14 +19,12 @@ export const FriendsAdd = () => {
                 const response = allUsers.data.filter(element => {
                     if (element.id === user.id) return false
                     for (let i = 0; i < follows?.length; i++) {
-                        console.log(follows[i].id)
                         if (element.id === follows[i].id) return false
 
                     }
                     return true;
                 });
 
-                console.log(response);
                 setUsers(response);
             }
             
@@ -35,7 +33,6 @@ export const FriendsAdd = () => {
         fetchData();
     },[])
 
-    console.log(users)
     const handleClick = async (element, index) => {
         try{
             await axios.put('http://localhost:3333/follow/' + user.id, {
