@@ -25,7 +25,7 @@ export const Perfil = () => {
             try {
                 const response = await axios.get('http://localhost:3333/getUser/', {
                     params: {
-                        name: user.name
+                        id: user.id
                     }
                 })
                 localStorage.setItem('user', JSON.stringify(response.data))

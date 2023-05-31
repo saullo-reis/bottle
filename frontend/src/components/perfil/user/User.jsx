@@ -7,7 +7,7 @@ import { ButtonCancel, ButtonConfirm, Modal, ModalOverlay } from '../../../style
 const userLocal = JSON.parse(localStorage.getItem('user'))
 
 export const PerfilUser = () => {
-    const { name } = useParams()
+    const { name, id } = useParams()
     const [user, setUser] = useState()
     const [modal, setModal] = useState(false)
     const [editUser, setEditUser] = useState({
@@ -21,19 +21,22 @@ export const PerfilUser = () => {
     })
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get('http://localhost:3333/getUser', {
-                params: {
-                    name: name
-                }
-            })
-            setUser(response.data)
+            try{
+                const response = await axios.get('http://localhost:3333/getUser', {
+                    params: {
+                        id: id
+                    }
+                })
+                setUser(response.data)     
+            }catch(err){
+                console.error(err)
+            }
         }
         fetchData()
-    }, [name])
+    }, [id])
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        console.log(file, 'aqui')
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
 
@@ -51,9 +54,9 @@ export const PerfilUser = () => {
     };
     const handleOpenModal = () => modal === false ? setModal(true) : setModal(false)
     const updateEdits = () => {
-        
-    }
 
+    }
+    console.log(user)
 
     return (
         <PerfilUserStyle style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px' }}>

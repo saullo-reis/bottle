@@ -36,10 +36,9 @@ const updatePhoto = (req, res) => {
 };
 
 const getUser = (req, res) => {
-    const q = 'SELECT * FROM users WHERE name = ?'
-    const  name = req.query.name
-
-    db.get(q, name, function (err, user) {
+    const q = 'SELECT * FROM users WHERE id = ?'
+    const id = req.query.id
+    db.get(q, id, function (err, user) {
         if (err) return res.status(500).json({ error: 'Erro no servidor' })
         return res.status(200).json(user);
     });
@@ -54,4 +53,23 @@ const getUsers = (req, res) => {
     })
 }
 
-export { register, login, updatePhoto, getUser, getUsers }
+const editProfile = async (req, res) => {
+    const q = ' UPDATE users SET photo = ?, name = ?, password = ? WHERE id = ?'
+    const id =  req.params.id
+    const {photo, name, password, newPassword1, newPassword2} = req.body
+
+    const userActual = await axios.get('http://localhost:3333/getUser/', {
+        params: {
+            id: userEdit.id
+        }
+    })
+    console.log(userActual.data )
+    db.run(q, [id, photo, name, password], function(err){
+        if(sha256(password) !== userActual.password) return res.status(401).send('Senha incorreta.')
+        if (sha256(newPassword1) !== sha256(newPassword2)) return res.status(401).send('Senhas não coincidem.')
+        if(err) return res.status(500)
+        return res.status(200).send(`Usuário ${userEdit.name} Editado com sucesso.`)
+    })
+}
+
+export { register, login, updatePhoto, getUser, getUsers, editProfile }
