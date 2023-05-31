@@ -7,6 +7,7 @@ import styled from 'styled-components'
 export const PerfilUser = () => {
     const { name } = useParams()
     const [user, setUser ] = useState()
+    const userLocal = JSON.parse(localStorage.getItem('user')) 
 
     console.log(name)
     useEffect(() => {
@@ -26,7 +27,7 @@ export const PerfilUser = () => {
             <img src={user?.photo}></img>
             <div className='container'>
                 <p>{name}</p>
-                <button>Editar perfil</button>
+                {userLocal.name === name && <button >Editar perfil</button>}
             </div>
         </PerfilUserStyle>
         

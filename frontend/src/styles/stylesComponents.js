@@ -178,6 +178,33 @@ const PostsStyle = styled.ul`
             font-weight: 700;
             justify-content: center;
             padding: 5px;
+            .ball{
+                background-color:#fff;
+                width: .6rem;
+                height: .6rem;
+                position: relative;
+                border-radius: 50%;
+                margin: 5px;
+                &::after{
+                    content: "";
+                    width: .6rem;
+                    height: .6rem;
+                    right: -20px;
+                    position: absolute;
+                    background: white;
+                    border-radius: 50%;
+
+                }
+                &::before{
+                    content: "";
+                    width: .6rem;
+                    height: .6rem;
+                    left: -20px;
+                    position: absolute;
+                    background: white;
+                    border-radius: 50%;
+                }
+            }
             img{
                 width: 30px;
                 border-radius: 100%;

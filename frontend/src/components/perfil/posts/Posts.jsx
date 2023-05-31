@@ -107,6 +107,11 @@ export const PerfilPosts = () => {
                                         <BiEdit onClick={() => handleModalOpen(element.id, 'edit')} />
                                     </>
                                 }
+                                {element.name !== user.name && 
+                                    <>
+                                        <span className="ball"></span>
+                                    </>
+                                }
                             </div>
                             <p className="posts-post-content">{element.content}</p>
                         </li>
