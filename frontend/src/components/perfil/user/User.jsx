@@ -36,7 +36,7 @@ export const PerfilUser = () => {
 const PerfilUserStyle = styled.aside`
     display: flex;
     margin: 20px;
-    padding: 100px 15px 0;
+    padding: 50px 15px 0;
     img{
         width: 150px;
         border-radius: 50%;

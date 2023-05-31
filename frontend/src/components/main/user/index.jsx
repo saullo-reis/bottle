@@ -9,6 +9,7 @@ import { styled } from 'styled-components'
 import { IoIosNotifications } from 'react-icons/io'
 import { HiUser } from 'react-icons/hi'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
 
 export const Perfil = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +17,7 @@ export const Perfil = () => {
     const [image, setImage] = useState('')
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate()
+    const userDefault = useSelector((state) => state.data)
 
     useEffect(() => {
         if (!user.name) navigate('/')
@@ -26,7 +28,7 @@ export const Perfil = () => {
                         name: user.name
                     }
                 })
-                localStorage.setItem('user', JSON.stringify(response.data)) // Armazena os dados atualizados do usuário no localStorage
+                localStorage.setItem('user', JSON.stringify(response.data))
             } catch (err) {
                 console.error(err)
             }
@@ -98,7 +100,10 @@ export const Perfil = () => {
         setIsModalOpen(false);
     }
 
-    console.log(selectedImage)
+    const handleLogout = () => {
+        localStorage.setItem('user', JSON.stringify(userDefault))
+        navigate('/')
+    }
 
     return (
         <PerfilUserStyle>
@@ -129,8 +134,6 @@ const PhotoHoverStyle = styled.div`
         width: 170px;
         cursor: pointer;
         transition: .7s;
-        box-shadow: 4px 4px 0 black;
-        border: solid 1px black;
         position: relative;
         overflow: hidden;
         img{
@@ -164,7 +167,7 @@ const PerfilUserStyle = styled.section`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin: 100px 15px;
+    margin: 50px 15px;
     max-height: 350px;
     padding: 10px;
     color: #fff;

@@ -114,7 +114,7 @@ const PostContentStyle = styled.form`
     flex-direction: column;
     border: solid black 1px;
     padding: 30px;
-    padding-top: 100px;
+    padding-top: 60px;
     label{
         color: #707070; 
     }

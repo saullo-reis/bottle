@@ -91,7 +91,7 @@ const Friends = styled.aside`
     border: solid 1px black;
     max-height: 350px;
     overflow-y: auto;
-    margin: 100px 15px;
+    margin: 60px 15px;
     padding: 10px;
     background-color: #121212;
     text-align: center;
