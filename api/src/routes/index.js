@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { register, login, updatePhoto, getUser, getUsers } from '../controllers/users.js'
+import { register, login, updatePhoto, getUser, getUsers, editProfile } from '../controllers/users.js'
 import { deletePost, editPost, getPosts } from '../controllers/perfil.js'
 import { createPost, posts } from '../controllers/posts.js'
 import { follow, getFollows, getFollowers, followers } from '../controllers/follow.js'
@@ -24,6 +24,7 @@ router.put('/follow/:id', follow)
 router.get('/getFollows/:id', getFollows)
 router.put('/followers/:id', followers)
 router.get('/getFollowers/:id', getFollowers)
+router.put('/editProfile/:id', editProfile)
 
 
 export { router }
