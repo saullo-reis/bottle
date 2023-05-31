@@ -12,7 +12,9 @@ const Modal = styled.aside`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: #2f2e2e;
     border-radius: 5px;
+    color: #fff;
     text-align: center;
     box-shadow: 4px 4px 0 black;
     border: solid 1px black;
@@ -35,7 +37,7 @@ const ButtonCancel = styled.input`
     border-radius: 8px;
     color: #fff;
     background-color: #ff2020;
-    margin: 30px;
+    margin: 10px;
     cursor: pointer;
     text-align: center;
     transition: 1s;
@@ -54,7 +56,7 @@ const ButtonConfirm = styled.input`
     border-radius: 8px;
     color: #fff;
     background-color: #2218e0;
-    margin: 55px;
+    margin: 10px;
     cursor: pointer;
     transition: 1s;
     box-shadow: 5px 5px 0px #000000;
