@@ -23,24 +23,24 @@ export const PerfilFriends = () => {
             
         }
         fetchData()
-    },[])
+    },[id])
 
     const changeWindow = (path) => setWindowFollow(path)
-
+    console.log(followers)
 
     return(
         <PerfilFriendsStyle>
             <div>
-                <button onClick={() => changeWindow('followers')} style={{borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers.length} Seguidores</button>
+                <button onClick={() => changeWindow('followers')} style={{borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers.length} Seguindo</button>
                 <button onClick={() => changeWindow('follows')} style={{ borderBottom: windowFollow === 'follows' && '2px solid #2222EE' }}>{follows.length} Seguidores</button>
             </div>
 
             {
-                windowFollow === 'followers' ? <ul className="perfil-friends-container">
+                windowFollow === 'followers' && <ul className="perfil-friends-container">
                     {
-                        followers?.map((element) => {
+                        followers?.map((element, index) => {
                             return (
-                                <li key={element.id}>
+                                <li key={index}>
                                     <Link to={`/perfil/${element.name}/${element.id}`}>
                                         <img src={element.photo}></img>
                                     </Link>
@@ -49,11 +49,14 @@ export const PerfilFriends = () => {
 
                         })
                     }
-                </ul> : <ul className="perfil-friends-container">
+                </ul> 
+            }
+            {
+                windowFollow === 'follows' && <ul className="perfil-friends-container">
                     {
-                        follows?.map((element) => {
+                        follows?.map((element, index) => {
                             return (
-                                <li key={element.id}>
+                                <li key={index}>
                                     <Link to={`/perfil/${element.name}/${element.id}`}>
                                         <img src={element.photo}></img>
                                     </Link>
@@ -62,7 +65,7 @@ export const PerfilFriends = () => {
 
                         })
                     }
-                </ul>
+                </ul> 
             }
             
         </PerfilFriendsStyle>
