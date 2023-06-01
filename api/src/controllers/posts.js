@@ -21,4 +21,14 @@ const posts = (__, res) => {
     })
 }
 
-export { createPost, posts }
+const editProfilePosts = (req, res) => {
+    const q = 'UPDATE posts SET name = ? WHERE idUser = ?'
+    const {name, id} = req.params
+    console.log(name, id)
+    db.run(q, [name, id], function(err){
+        if(err) return res.status(500).send(err.message)
+        return res.status(200).send('Atualizado')
+    })
+}
+
+export { createPost, posts, editProfilePosts }

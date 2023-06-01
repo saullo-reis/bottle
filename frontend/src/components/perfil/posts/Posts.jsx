@@ -13,7 +13,7 @@ export const PerfilPosts = () => {
     const [idPost, setIdPost] = useState(0)
     const user = JSON.parse(localStorage.getItem('user'))
     const [newContent, setNewContent ] = useState('')
-
+    
     useEffect(() => {
         async function fetchData() {
             const response = await axios.get('http://localhost:3333/getPosts', {
