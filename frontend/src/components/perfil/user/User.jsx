@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import { ButtonCancel, ButtonConfirm, Modal, ModalOverlay } from '../../../styles/stylesComponents'
 const userLocal = JSON.parse(localStorage.getItem('user'))
+
 
 export const PerfilUser = () => {
     const { name, id } = useParams()
@@ -19,21 +21,19 @@ export const PerfilUser = () => {
         input1: '',
         input2: ''
     })
+
     useEffect(() => {
         async function fetchData() {
-            try{
-                const response = await axios.get('http://localhost:3333/getUser', {
-                    params: {
-                        id: id
-                    }
-                })
-                setUser(response.data)     
-            }catch(err){
+            try {
+                const response = await axios.get('http://localhost:3333/getUser/' + id)
+                localStorage.setItem('user', JSON.stringify(response.data))
+                setUser(response.data)
+            } catch (err) {
                 console.error(err)
             }
         }
         fetchData()
-    }, [id])
+    }, [id, modal])
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -50,13 +50,78 @@ export const PerfilUser = () => {
 
             reader.readAsDataURL(file);
         }
-        
+
     };
+
     const handleOpenModal = () => modal === false ? setModal(true) : setModal(false)
-    const updateEdits = () => {
+
+    function resizeImage(inputImage, outputWidth, outputHeight) {
+        return new Promise((resolve, reject) => {
+            const canvas = document.createElement("canvas")
+            const ctx = canvas.getContext('2d')
+
+            const img = new Image()
+            img.onload = function () {
+                canvas.width = outputWidth
+                canvas.height = outputHeight
+
+                ctx.drawImage(img, 0, 0, outputWidth, outputHeight)
+
+                const resizedImage = canvas.toDataURL("image/jpeg")
+
+                resolve(resizedImage)
+            }
+
+            img.onerror = reject
+            img.src = inputImage
+        })
+    }
+
+    const updateEdits = (e) => {
+        e.preventDefault()
+        try {
+            if(editUser.photo !== userLocal.photo){
+                resizeImage(editUser.photo, 300, 300)
+                    .then((resizedImage) => {
+                        axios.put('http://localhost:3333/update/' + id, {
+                            photo: resizedImage
+                        })
+                        setModal(false)
+                        toast.success('Foto atualizada com sucesso!')
+                        setImage(resizedImage)
+                    })
+                    .catch((err) => {
+                        if (err.message === 'Request failed with status code 413') {
+                            toast.error('Imagem muito grande')
+                        }
+                        console.error(err.message)
+                    })
+            }
+            if(editUser.name !== userLocal.name){
+                axios.put('http://localhost:3333/editProfileName/' + id, {
+                    name: editUser.name
+                })
+                axios.put(`http://localhost:3333/editProfilePosts/${editUser.name}/${id}`)
+                toast.success('Nome atualizado!')
+            }
+            if (newPassword.input1 !== newPassword.input2) {
+                toast.error('As novas senhas não são iguais!')
+                return
+            }
+            if(editUser.password !== ''){
+                axios.put(`http://localhost:3333/editProfilePassword/${id}`, {
+                    password: editUser.password,
+                    newPassword1: newPassword.input1,
+                    newPassword2: newPassword.input2
+                })
+                toast.success('Senha atualizada com sucesso!')
+            }
+            setModal(false)
+        } catch (err) {
+            console.error(err)
+        }
 
     }
-    console.log(user)
 
     return (
         <PerfilUserStyle style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px' }}>
@@ -69,20 +134,14 @@ export const PerfilUser = () => {
                 modal &&
                 <ModalOverlay>
                     <Modal>
-                        <Form onSubmit={{updateEdits}}>
+                        <Form onSubmit={updateEdits}>
                             <label htmlFor='image' className='input-file'><img src={editUser.photo}></img></label>
-                                <input id='image' accept="image/*" type={'file'} onChange={handleImageChange}></input>
-                            <label>Editar nome:</label>
-                                <input className='inputs' value={editUser.name} onChange={(e) => setEditUser({
-                                name: e.target.value,
-                                photo: editUser.photo,
-                                password: editUser.password
-                            })} type={'text'}></input>
+                            <input id='image' accept="image/*" type={'file'} onChange={handleImageChange}></input>
                             <label>Editar senha:</label>
                             <input className='inputs' onChange={(e) => setEditUser({
                                 name: editUser.name,
                                 photo: editUser.photo,
-                                password: editUser.password
+                                password: e.target.value
                             })} placeholder='Senha atual' type={'password'}></input>
                             <input className='inputs' onChange={(e) => setNewPassword({
                                 input1: newPassword.input1,

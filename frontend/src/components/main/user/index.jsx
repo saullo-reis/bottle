@@ -23,11 +23,7 @@ export const Perfil = () => {
         if (!user.name) navigate('/')
         async function fetchData() {
             try {
-                const response = await axios.get('http://localhost:3333/getUser/', {
-                    params: {
-                        id: user.id
-                    }
-                })
+                const response = await axios.get('http://localhost:3333/getUser/' + user.id, )
                 localStorage.setItem('user', JSON.stringify(response.data))
             } catch (err) {
                 console.error(err)
