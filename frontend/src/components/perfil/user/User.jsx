@@ -77,7 +77,7 @@ export const PerfilUser = () => {
         })
     }
 
-    const updateEdits = (e) => {
+    const updateEdits = async (e) => {
         e.preventDefault()
         try {
             if(editUser.photo !== userLocal.photo){
@@ -97,27 +97,28 @@ export const PerfilUser = () => {
                         console.error(err.message)
                     })
             }
-            if(editUser.name !== userLocal.name){
-                axios.put('http://localhost:3333/editProfileName/' + id, {
-                    name: editUser.name
-                })
-                axios.put(`http://localhost:3333/editProfilePosts/${editUser.name}/${id}`)
-                toast.success('Nome atualizado!')
-            }
+            // if(editUser.name !== userLocal.name){
+            //     axios.put('http://localhost:3333/editProfileName/' + id, {
+            //         name: editUser.name
+            //     })
+            //     axios.put(`http://localhost:3333/editProfilePosts/${editUser.name}/${id}`)
+            //     toast.success('Nome atualizado!')
+            // }
             if (newPassword.input1 !== newPassword.input2) {
                 toast.error('As novas senhas não são iguais!')
                 return
             }
             if(editUser.password !== ''){
-                axios.put(`http://localhost:3333/editProfilePassword/${id}`, {
+                await axios.put(`http://localhost:3333/editProfilePassword/${id}`, {
                     password: editUser.password,
                     newPassword1: newPassword.input1,
                     newPassword2: newPassword.input2
                 })
                 toast.success('Senha atualizada com sucesso!')
+                setModal(false)
             }
-            setModal(false)
         } catch (err) {
+            toast.error('Senha errada')
             console.error(err)
         }
 

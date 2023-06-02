@@ -60,12 +60,18 @@ const editProfilePassword = async (req, res) => {
     const {password, newPassword1, newPassword2} = req.body
     const userActual = await axios.get('http://localhost:3333/getUser/'+id)
 
-    db.run(q, [sha256(newPassword1), id], function(err){
-        if (sha256(password) !== userActual.data.password) return res.status(401).send('Senha incorreta.')
-        if (newPassword1 !== newPassword2) return res.status(401).send('Senhas não coincidem.')
-        if(err) return res.status(500)
-        return res.status(200).send(`Senha atualizada`)
-    })
+    console.log(sha256(password), userActual.data.password)
+
+    if (sha256(password) === userActual.data.password && newPassword1 === newPassword2) {
+        db.run(q, [sha256(newPassword1), id], function (err) {
+            if (err) return res.status(500)
+            return res.status(200).send('Senha atualizada')
+        })
+    }else{
+        console.log('Error')
+        return res.status(401).send('Erro cliente.')
+    }
+    
 }
 
 export { register, login, updatePhoto, getUser, getUsers, editProfilePassword }
