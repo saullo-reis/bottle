@@ -29,8 +29,8 @@ export const PerfilFollow = () => {
     return(
         <PerfilFollowStyle>
             <div>
-                <button onClick={() => changeWindow('followers')} style={{borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers?.length} Seguindo</button>
-                <button onClick={() => changeWindow('follows')} style={{ borderBottom: windowFollow === 'follows' && '2px solid #2222EE' }}>{follows?.length} Seguidores</button>
+                <button onClick={() => changeWindow('followers')} style={{ borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers?.length} Seguidores</button>
+                <button onClick={() => changeWindow('follows')} style={{ borderBottom: windowFollow === 'follows' && '2px solid #2222EE' }}>{follows?.length} Seguindo</button>
             </div>
 
             {
