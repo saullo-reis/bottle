@@ -13,7 +13,7 @@ export const PerfilUser = () => {
     const [user, setUser] = useState()
     const [modal, setModal] = useState(false)
     const [editUser, setEditUser] = useState({
-        userName: userLocal.userName,
+        userName: "",
         photo: userLocal.photo,
         password: '',
     })
@@ -26,7 +26,6 @@ export const PerfilUser = () => {
         async function fetchData() {
             try {
                 const response = await axios.get('http://localhost:3333/getUser/' + id)
-                localStorage.setItem('user', JSON.stringify(response.data))
                 setUser(response.data)
             } catch (err) {
                 console.error(err)
@@ -97,7 +96,7 @@ export const PerfilUser = () => {
                         console.error(err.message)
                     })
             }
-            if (editUser.userName !== userLocal.userName) {
+            if (editUser.userName !== undefined) {
                 axios.put('http://localhost:3333/editUserName/' + id, {
                     userName: editUser.userName
                 })
@@ -122,15 +121,39 @@ export const PerfilUser = () => {
         }
 
     }
+
+    const handleClick = async (element) => {
+        try {
+            await axios.put('http://localhost:3333/follow/' + userLocal.id, {
+                id: user.id,
+                email: user.email,
+                photo: user.photo,
+                name: user.name
+            })
+            await axios.put('http://localhost:3333/followers/' + user.id, {
+                id: userLocal.id,
+                email: userLocal.email,
+                photo: userLocal.photo,
+                name: userLocal.name
+            })
+            toast.success('Você seguiu ' + element.name)
+        } catch (err) {
+            console.error(err)
+        }
+
+
+    }
+
+
     return (
         <PerfilUserStyle style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px' }}>
             <img src={user?.photo}></img>
             <div className='container'>
                 <div className='names'>
-                    <h1>{userLocal.userName}</h1>
+                    <h1>{user?.userName}</h1>
                     <p>@{name}</p>
-                </div>    
-                {userLocal.name === name && <button onClick={handleOpenModal} >Editar perfil</button>}
+                </div>
+                {userLocal.name === name ? <button onClick={handleOpenModal} >Editar perfil</button> : <button onClick={() => handleClick(user)}>Seguir</button>}
             </div>
             {
                 modal &&
