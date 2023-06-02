@@ -67,7 +67,7 @@ export const FollowAdd = () => {
 
     return(
         <FollowsStyle>
-            <h1>Talvez você conheça</h1>
+            <h1>Usuários</h1>
             <input className="search-users" onChange={(e) => searchUsers(e.target.value)} placeholder='Digite o nome aqui'></input>
             <ul>
                 {

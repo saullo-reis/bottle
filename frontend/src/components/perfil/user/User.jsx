@@ -126,8 +126,10 @@ export const PerfilUser = () => {
         <PerfilUserStyle style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px' }}>
             <img src={user?.photo}></img>
             <div className='container'>
-                <h1>{userLocal.userName}</h1>
-                <p>@{name}</p>
+                <div className='names'>
+                    <h1>{userLocal.userName}</h1>
+                    <p>@{name}</p>
+                </div>    
                 {userLocal.name === name && <button onClick={handleOpenModal} >Editar perfil</button>}
             </div>
             {
@@ -234,6 +236,10 @@ const PerfilUserStyle = styled.aside`
         width: 150px;
         border-radius: 50%;
     }
+    .names{
+        display: flex;
+        align-items: flex-end;
+    }
     .container{
         margin: 10px;
         display: flex;
@@ -247,7 +253,8 @@ const PerfilUserStyle = styled.aside`
         p{
             font-weight: 700;
             color: gray;
-            font-size: 10px
+            font-size: 10px;
+            margin: 0 0 4px 2px;
         }
         button{
             border: none;
