@@ -212,7 +212,7 @@ const PostsStyle = styled.ul`
                 border-radius: 100%;
             }
             h3{
-                color: #fff;
+                color: gray;
                 margin: 0 5px;
             }
             p{

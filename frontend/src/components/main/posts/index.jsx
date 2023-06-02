@@ -74,7 +74,7 @@ export const Posts = () => {
                             <li key={index}>
                                 <div>
                                     <Link to={'/perfil/' + element.name + '/' + element.id}><img src={element.photo}></img> </Link>
-                                    <h3>{element.name}</h3>
+                                    <h3>@{element.name}</h3>
                                     <p>{dateNow(element.created_at)}</p>
                                 </div>
                                 <p>{element.content}</p>

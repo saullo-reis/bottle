@@ -115,7 +115,10 @@ export const Perfil = () => {
             <PhotoHoverStyle className='perfil-photo' onClick={handleModalOpen}>
                 <img className='perfil-photo' src={!image ? user.photo : image}></img>
             </PhotoHoverStyle>
-            <h1 className='perfil-name'>{user.name}</h1>
+            <div className='names'>
+                <h1 className='perfil-name'>{user.userName}</h1>
+                <p>@{user.name}</p>
+            </div>
             <nav>
                 <Link to={'/perfil/'+user.name+'/'+user.id}><HiUser/> Perfil</Link>
                 <p><IoIosNotifications />   Notificações</p>
@@ -167,6 +170,11 @@ const PerfilUserStyle = styled.section`
     max-height: 350px;
     padding: 10px;
     color: #fff;
+    .names{
+        display: flex;
+        align-items: flex-end;
+        margin-top: 20px;
+    }
     nav{
         a, p{
             color: #fff;
@@ -184,11 +192,12 @@ const PerfilUserStyle = styled.section`
     p{
         font-size: 10px;
         color: gray;
-        align-self: center;
+        margin-left: 3px;
+        margin-bottom: 4px;
     }     
     h1{
-        font-size: 25px;
-        margin-top: 10px;
+        font-size: 25px;    
+        color: #fff;
         text-shadow: 0 0 2px black;
     }
     h2{

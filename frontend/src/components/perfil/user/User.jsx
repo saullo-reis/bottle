@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import { ButtonCancel, ButtonConfirm, Modal, ModalOverlay } from '../../../styles/stylesComponents'
@@ -13,7 +13,7 @@ export const PerfilUser = () => {
     const [user, setUser] = useState()
     const [modal, setModal] = useState(false)
     const [editUser, setEditUser] = useState({
-        name: userLocal.name,
+        userName: userLocal.userName,
         photo: userLocal.photo,
         password: '',
     })
@@ -42,7 +42,7 @@ export const PerfilUser = () => {
 
             reader.onload = () => {
                 setEditUser({
-                    name: editUser.name,
+                    name: editUser.userName,
                     photo: reader.result,
                     password: editUser.password
                 });
@@ -80,7 +80,7 @@ export const PerfilUser = () => {
     const updateEdits = async (e) => {
         e.preventDefault()
         try {
-            if(editUser.photo !== userLocal.photo){
+            if (editUser.photo !== userLocal.photo) {
                 resizeImage(editUser.photo, 300, 300)
                     .then((resizedImage) => {
                         axios.put('http://localhost:3333/update/' + id, {
@@ -97,18 +97,17 @@ export const PerfilUser = () => {
                         console.error(err.message)
                     })
             }
-            // if(editUser.name !== userLocal.name){
-            //     axios.put('http://localhost:3333/editProfileName/' + id, {
-            //         name: editUser.name
-            //     })
-            //     axios.put(`http://localhost:3333/editProfilePosts/${editUser.name}/${id}`)
-            //     toast.success('Nome atualizado!')
-            // }
+            if (editUser.userName !== userLocal.userName) {
+                axios.put('http://localhost:3333/editUserName/' + id, {
+                    userName: editUser.userName
+                })
+                toast.success('Nome atualizado!')
+            }
             if (newPassword.input1 !== newPassword.input2) {
                 toast.error('As novas senhas não são iguais!')
                 return
             }
-            if(editUser.password !== ''){
+            if (editUser.password !== '') {
                 await axios.put(`http://localhost:3333/editProfilePassword/${id}`, {
                     password: editUser.password,
                     newPassword1: newPassword.input1,
@@ -123,12 +122,12 @@ export const PerfilUser = () => {
         }
 
     }
-
     return (
         <PerfilUserStyle style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '20px' }}>
             <img src={user?.photo}></img>
             <div className='container'>
-                <p>{name}</p>
+                <h1>{userLocal.userName}</h1>
+                <p>@{name}</p>
                 {userLocal.name === name && <button onClick={handleOpenModal} >Editar perfil</button>}
             </div>
             {
@@ -138,9 +137,15 @@ export const PerfilUser = () => {
                         <Form onSubmit={updateEdits}>
                             <label htmlFor='image' className='input-file'><img src={editUser.photo}></img></label>
                             <input id='image' accept="image/*" type={'file'} onChange={handleImageChange}></input>
+                            <label >Editar Nome:</label>
+                            <input className='inputs' placeholder='Digite o nome' type={'text'} onChange={(e) => setEditUser({
+                                userName: e.target.value,
+                                photo: editUser.photo,
+                                password: editUser.password
+                            })}></input>
                             <label>Editar senha:</label>
                             <input className='inputs' onChange={(e) => setEditUser({
-                                name: editUser.name,
+                                name: editUser.userName,
                                 photo: editUser.photo,
                                 password: e.target.value
                             })} placeholder='Senha atual' type={'password'}></input>
@@ -236,9 +241,13 @@ const PerfilUserStyle = styled.aside`
         align-items: center;
         text-align: center;
         width: 100%;
+        h1{
+            color: #fff
+        }
         p{
             font-weight: 700;
-            color: #fff
+            color: gray;
+            font-size: 10px
         }
         button{
             border: none;

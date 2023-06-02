@@ -3,10 +3,10 @@ import { sha256 } from 'js-sha256'
 import axios from 'axios'
 
 const register = (req, res) => {
-    const q = 'INSERT INTO users (name, email, password, photo) VALUES (?, ?, ?, ?)'
+    const q = 'INSERT INTO users (name, email, password, photo, userName) VALUES (?, ?, ?, ?, ?)'
     const { name, email, password, photo } = req.body
 
-    db.run(q, [name, email, sha256(password), photo], function (err) {
+    db.run(q, [name, email, sha256(password), photo, name], function (err) {
         if (err) return res.status(401).json({ error: err.message })
 
         console.log("Usuário registrado")
@@ -54,6 +54,16 @@ const getUsers = (req, res) => {
     })
 }
 
+const editUserName = (req, res) => {
+    const q = 'UPDATE users SET userName = ? WHERE id = ?';
+    const id = req.params.id;
+    const userName = req.body.userName;
+
+    db.run(q, [userName, id], function (err) {
+        if (err) return res.status(500).json({ error: 'Erro no servidor' });
+        return res.status(200).json(req.body);
+    });
+};
 const editProfilePassword = async (req, res) => {
     const q = ' UPDATE users SET password = ? WHERE id = ?'
     const id =  req.params.id
@@ -74,4 +84,4 @@ const editProfilePassword = async (req, res) => {
     
 }
 
-export { register, login, updatePhoto, getUser, getUsers, editProfilePassword }
+export { register, login, updatePhoto, getUser, getUsers, editProfilePassword, editUserName }
