@@ -76,7 +76,7 @@ export const FollowAdd = () => {
                         return (
                             <li key={index} className='people'>
                                 <div>
-                                    <Link>
+                                    <Link to={'/perfil/'+element.name+'/'+ element.id}>
                                         <img src={element.photo} />
                                     </Link>
                                     <p>@{element.name}</p>
