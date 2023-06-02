@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 
-export const PerfilFriends = () => {
+export const PerfilFollow = () => {
     const [followers, setFollowers] = useState([])
     const [follows, setFollows] = useState([])
     const { id } = useParams()
@@ -27,14 +27,14 @@ export const PerfilFriends = () => {
     const changeWindow = (path) => setWindowFollow(path)
 
     return(
-        <PerfilFriendsStyle>
+        <PerfilFollowStyle>
             <div>
                 <button onClick={() => changeWindow('followers')} style={{borderBottom: windowFollow === 'followers' && '2px solid #2222EE' }}>{followers?.length} Seguindo</button>
                 <button onClick={() => changeWindow('follows')} style={{ borderBottom: windowFollow === 'follows' && '2px solid #2222EE' }}>{follows?.length} Seguidores</button>
             </div>
 
             {
-                windowFollow === 'followers' && <ul className="perfil-friends-container">
+                windowFollow === 'followers' && <ul >
                     {
                         followers?.map((element, index) => {
                             return (
@@ -50,7 +50,7 @@ export const PerfilFriends = () => {
                 </ul> 
             }
             {
-                windowFollow === 'follows' && <ul className="perfil-friends-container">
+                windowFollow === 'follows' && <ul >
                     {
                         follows?.map((element, index) => {
                             return (
@@ -66,11 +66,11 @@ export const PerfilFriends = () => {
                 </ul> 
             }
             
-        </PerfilFriendsStyle>
+        </PerfilFollowStyle>
     )
 }
 
-const PerfilFriendsStyle = styled.aside`
+const PerfilFollowStyle = styled.aside`
     display: flex;
     flex-direction: column;
     align-items: center;

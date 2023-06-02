@@ -4,7 +4,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import {toast} from 'react-toastify'
 
-export const FriendsAdd = () => {
+export const FollowAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [users, setUsers ] = useState([])
    
@@ -58,7 +58,7 @@ export const FriendsAdd = () => {
     }
 
     return(
-        <Friends>
+        <FollowsStyle>
             <h1>Talvez você conheça</h1>
             <ul>
                 {
@@ -75,12 +75,12 @@ export const FriendsAdd = () => {
                     })
                 }
             </ul>
-        </Friends>
+        </FollowsStyle>
         
     )
 }
 
-const Friends = styled.aside`
+const FollowsStyle = styled.aside`
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -2,7 +2,7 @@ import { Footer } from "../headerAndFooter/footer/Footer"
 import { Header } from "../headerAndFooter/header/Header"
 import { Perfil } from "./user"
 import { Posts } from "./posts"
-import { FriendsAdd } from "./follows/Follows"
+import { FollowAdd } from "./follows/Follows"
 import { styled } from "styled-components"
 
 export const Main = () => {
@@ -12,7 +12,7 @@ export const Main = () => {
             <main>
                 <Perfil/>
                 <Posts />
-                <FriendsAdd/>
+                <FollowAdd/>
             </main>
             <Footer/>    
         </MainStyle>
