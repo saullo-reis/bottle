@@ -3,11 +3,13 @@ import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 import {toast} from 'react-toastify'
+import { Link } from "react-router-dom"
 
 export const FollowAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [users, setUsers ] = useState([])
-   
+    const [filterUsers, setFilterUsers] = useState([])
+
     useEffect(() => {
         async function fetchData() {
             const allUsers = await axios.get('http://localhost:3333/getUsers');
@@ -31,7 +33,7 @@ export const FollowAdd = () => {
         }
 
         fetchData();
-    },[])
+    },[filterUsers])
 
     const handleClick = async (element, index) => {
         try{
@@ -57,19 +59,45 @@ export const FollowAdd = () => {
         
     }
 
+    const searchUsers = (e) => {
+        setFilterUsers(users.filter(element => {
+            if(element.name.toLowerCase().includes(e)) return element
+        }))
+    }
+
     return(
         <FollowsStyle>
             <h1>Talvez você conheça</h1>
+            <input className="search-users" onChange={(e) => searchUsers(e.target.value)} placeholder='Digite o nome aqui'></input>
             <ul>
                 {
+                    filterUsers.length === 0 &&
                     users.map((element, index) => {
-                        return(
-                            <li key={index} className="people" >
+                        return (
+                            <li key={index} className='people'>
                                 <div>
-                                    <img src={element.photo} />
-                                    <p>{element.name}</p>
+                                    <Link>
+                                        <img src={element.photo} />
+                                    </Link>
+                                    <p>@{element.name}</p>
                                 </div>
                                 <button onClick={() => handleClick(element, index)}>Seguir</button>
+                            </li>
+                        )
+                    })
+                }
+                {
+                    filterUsers.length >= 1 &&
+                    filterUsers.map((element, index) => {
+                        return(
+                            <li key={index} className='people'>
+                                    <div>
+                                        <Link>
+                                            <img src={element.photo} />
+                                        </Link>
+                                        <p>@{element.name}</p>
+                                    </div>
+                                    <button onClick={() => handleClick(element, index)}>Seguir</button>
                             </li>
                         )
                     })
@@ -92,6 +120,18 @@ const FollowsStyle = styled.aside`
     padding: 10px;
     background-color: #121212;
     text-align: center;
+    .search-users{
+        padding: 2px;
+        border-radius: 8px;
+        background-color: #121212;
+        border: #fff solid 2px;
+        color: #fff;
+        &:focus{
+            outline: #22e 2px solid;
+            border: none;
+            
+        }
+    }
     .animation{
         animation: slide ease forwards 1s
     }
@@ -115,6 +155,7 @@ const FollowsStyle = styled.aside`
             justify-content: space-between;
             align-items: center;
             position: relative;
+            padding: 10px;
             width: 80%;
             div{
                 display: flex;
@@ -122,28 +163,28 @@ const FollowsStyle = styled.aside`
                 align-items: center;
                 img{
                 width: 40px;
-                border-top-left-radius: 8px;
-                border-bottom-left-radius: 8px;
+                border-radius: 50%;
+                border: #000 solid 2px;
                 }
                 p{
-                    color: white;
+                    color: gray;
                     font-size: 12px;
                     text-align: center;
-                    
+                    margin-left: 5px;
                 }
             }
             button{
                 border: none;
                 font-size: 20px;
-                border-radius: 8px;
+                border-radius: 32px;
                 font-size: 10px;
                 background: none;
                 margin-right: 5px ;
                 color: white;
                 text-align: center;
-                padding: 2px 5px;
+                padding: 4px 7px;
                 cursor: pointer;
-                transition: 0.7s;
+                transition: 0.3s;
                     &:hover{
                         background-color: #121212
                     }
