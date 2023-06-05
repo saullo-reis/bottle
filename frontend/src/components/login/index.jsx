@@ -27,7 +27,7 @@ export const Login = () => {
                 password: data.password
             })
             localStorage.setItem('user', JSON.stringify(response.data));
-            navigate('/Home')
+            navigate('/feed')
         }
         catch (err) {
             switch (err.request.status) {

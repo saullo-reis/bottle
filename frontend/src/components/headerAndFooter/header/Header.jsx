@@ -18,13 +18,11 @@ export const Header = () => {
 
     return (
         <HeaderStyle>
-            <Link to={'/Home'}><h1 className="header-logo">Bottle</h1></Link>
+            <Link to={'/feed'}><h1 className="header-logo">Bottle</h1></Link>
             <button><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
                 <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
-                <p>Amigos</p>
-                <p>Mensagens</p>
-                <p>Tema</p>
+                <p>Notificações</p>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}>Logout</p>
             </aside>
         </HeaderStyle>
