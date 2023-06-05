@@ -3,6 +3,7 @@ import { register, login, updatePhoto, getUser, getUsers, editProfilePassword, e
 import { deletePost, editPost, getPosts } from '../controllers/perfil.js'
 import { createPost, editProfilePosts, posts } from '../controllers/posts.js'
 import { follow, getFollows, getFollowers, followers } from '../controllers/follow.js'
+import { getNotifications, notification } from '../controllers/notification.js'
 
 const router = Router()
 
@@ -27,5 +28,7 @@ router.get('/getFollowers/:id', getFollowers)
 router.put('/editProfilePassword/:id', editProfilePassword)
 router.put('/editProfilePosts/:name/:id', editProfilePosts)
 router.put('/editUserName/:id', editUserName)
+router.get('/getNotifications/:id', getNotifications)
+router.put('/notification/:id', notification)
 
 export { router }
