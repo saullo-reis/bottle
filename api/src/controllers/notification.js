@@ -25,7 +25,7 @@ export const notification = async (req, res) => {
         })
     } else {
         let allNotifications = JSON.parse(notifications.data.notification)
-        allNotifications.push(newNotification)
+        allNotifications.unshift(newNotification)
         db.run(query, [JSON.stringify(allNotifications), id], function (err) {
             if (err) return res.status(500).send(err.message)
             return res.status(200).send('Sucess')
