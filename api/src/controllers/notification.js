@@ -32,3 +32,26 @@ export const notification = async (req, res) => {
         })
     }
 }
+
+export const cleanNotifications = async (req, res) => {
+    const id = req.params.id
+    let response = await axios.get('http://localhost:3333/getNotifications/' + id)
+    const query = 'UPDATE users SET notification = ? WHERE id = ?'
+    const allNotifications = JSON.parse(response.data.notification)
+    
+
+    const visualized = allNotifications.map((element) => {
+        return {
+            name: element.name,
+            photo: element.photo,
+            text: element.text,
+            visualized: true
+        }
+    })
+
+    db.run(query, [JSON.stringify(visualized), id], function(err){
+        if(err) return res.status(500).send('ERROR')
+        res.status(200).send('Visualizado.')
+    })
+
+}
