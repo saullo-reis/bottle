@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom'
-import { AppRoutes } from './components/pages/Routes'
+import { AppRoutes } from './pages/Routes'
 import { store } from './store'
 import { Provider} from 'react-redux'
 import { createGlobalStyle } from 'styled-components'

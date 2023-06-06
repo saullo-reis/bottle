@@ -1,10 +1,10 @@
 import { Routes, Route} from 'react-router-dom'
-import { Login } from '../login'
-import { Register } from '../login/register/Register'
-import { Main } from '../main'
-import { Perfil } from '../perfil'
-import { Home } from '../home'
-import { Notifications } from '../notification/index'
+import { Login } from '../components/login'
+import { Register } from '../components/login/register/Register'
+import { Main } from '../components/main'
+import { Perfil } from '../components/perfil'
+import { Home } from '../components/home'
+import { Notifications } from '../components/notification/index'
 
 export const AppRoutes = () => {
     return (
