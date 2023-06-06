@@ -18,6 +18,7 @@ export const Perfil = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate()
     const userDefault = useSelector((state) => state.data)
+    const notifications = JSON.parse(user.notification)
 
     useEffect(() => {
         if (!user.name) navigate('/')
@@ -87,6 +88,7 @@ export const Perfil = () => {
             reader.readAsDataURL(file);
         }
     };
+    console.log(user)
 
     function handleModalOpen() {
         setIsModalOpen(true);
@@ -121,7 +123,7 @@ export const Perfil = () => {
             </div>
             <nav>
                 <Link to={'/perfil/'+user.name+'/'+user.id}><HiUser/> Perfil</Link>
-                <p><IoIosNotifications />   Notificações</p>
+                <Link to={'/notifications'} className='notifications'><IoIosNotifications /> Notificações <span className='notifications-span'>{notifications.length}</span></Link>
                 <p onClick={() => handleLogout()}><RiLogoutBoxRFill/>  Logout</p>
             </nav>
             <ToastContainer position='bottom-left' />
@@ -176,17 +178,35 @@ const PerfilUserStyle = styled.section`
         margin-top: 20px;
     }
     nav{
+        .notifications{
+            position: relative;
+        }
+        .notifications-span{
+            position: absolute;
+            top: 0;
+            left: 0 ;
+            border-radius: 50%;
+            background-color: #e71111;
+            padding: 2px 7px;
+            animation: pulsing infinite ease forwards 3s;
+
+        }
         a, p{
             color: #fff;
             cursor: pointer;
             margin: 5px 0;
-            font-size: 15px;
+            font-size: 10px;
             transition: .3s;
+            display: flex;
+            align-items: center;
             border-radius: 8px;
             padding: 3px;
             &:hover{
                 background-color: #222EEE;
             }
+        }
+        svg{
+            font-size: 25px;
         }
     }
     p{
@@ -213,5 +233,18 @@ const PerfilUserStyle = styled.section`
     @media ( max-width: 900px ){
         display: none;
     }      
+
+
+    @keyframes pulsing{
+        0%{
+            transform: scale(0.9);
+        }
+        50%{
+            transform: scale(1.2);
+        }
+        100%{
+            transform: scale(0.9);
+        }
+    }
     
 `

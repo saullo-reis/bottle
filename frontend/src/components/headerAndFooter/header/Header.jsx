@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { styled } from 'styled-components'
+import { IoIosLogOut, IoIosNotifications, IoIosPerson } from 'react-icons/io'
 
 export const Header = () => {
     const [show, setShow] = useState('none')
@@ -14,17 +15,24 @@ export const Header = () => {
         navigate('/')
     }
     const user = JSON.parse(localStorage.getItem('user'))
+    const notifications = JSON.parse(user.notification)
 
 
     return (
         <HeaderStyle>
             <Link to={'/feed'}><h1 className="header-logo">Bottle</h1></Link>
-            <button><ImMenu onClick={() => handleClick()} /></button>
+            <button className='button-menu'><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
                 <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
-                <p>Notificações</p>
+                <Link to={'/notifications'} className='notifications'>Notificações</Link>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}>Logout</p>
             </aside>
+            <nav className='navigation'>
+                <Link to={'/notifications'}><span className='notifications-span'>{notifications.length}</span><IoIosNotifications className='icon-notifications'></IoIosNotifications></Link>
+                <Link to={'/perfil/' + user.name + '/' + user.id}><IoIosPerson /></Link>
+                <p onClick={() => handleLogout()} style={{ color: 'red' }}><IoIosLogOut /></p>
+            </nav>
+            
         </HeaderStyle>
     )
 }
@@ -39,12 +47,31 @@ const HeaderStyle = styled.section`
     color: #22e;
     z-index: 999;
     text-shadow: 0 1px 2px black;
-    button{
+    .navigation{
+        display: flex;
+    }
+    .button-menu{
         border: none;
         background: none;
         color: #22e;
+        display: none;
     }
-        
+    .icon-notifications{
+        position: relative;
+    }
+    .notifications-span{
+        position: absolute;
+        top: 0;
+        color: #fff;
+        right: 110px;
+        font-size: 10px;
+        z-index: 3;
+        border-radius: 50%;
+        background-color: #e71111;
+        padding: 1px 5px;
+        animation: pulsing infinite ease forwards 3s;
+
+    }    
     a{
         color: #22e;
     }
@@ -85,7 +112,14 @@ const HeaderStyle = styled.section`
         }
             
     }
-        
+    @media (max-width: 500px) {
+        .button-menu{
+            display: block;
+        }
+        .navigation{
+            display: none;
+        }
+    } 
 
 @keyframes modal{
     0%{
