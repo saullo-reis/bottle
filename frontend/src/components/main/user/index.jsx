@@ -10,6 +10,7 @@ import { IoIosNotifications } from 'react-icons/io'
 import { HiUser } from 'react-icons/hi'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
+import { lengthNotifications } from '../../../actions/lengthNotifications'
 
 export const Perfil = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,7 @@ export const Perfil = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate()
     const userDefault = useSelector((state) => state.data)
-    const notifications = JSON.parse(user.notification)
+    const [notificationLength, setNotificationLength] = useState(0)
 
     useEffect(() => {
         if (!user.name) navigate('/')
@@ -26,6 +27,8 @@ export const Perfil = () => {
             try {
                 const response = await axios.get('http://localhost:3333/getUser/' + user.id, )
                 localStorage.setItem('user', JSON.stringify(response.data))
+                const responseNotifications = await lengthNotifications(user.id)
+                setNotificationLength(responseNotifications)
             } catch (err) {
                 console.error(err)
             }
@@ -88,7 +91,6 @@ export const Perfil = () => {
             reader.readAsDataURL(file);
         }
     };
-    console.log(user)
 
     function handleModalOpen() {
         setIsModalOpen(true);
@@ -123,7 +125,7 @@ export const Perfil = () => {
             </div>
             <nav>
                 <Link to={'/perfil/'+user.name+'/'+user.id}><HiUser/> Perfil</Link>
-                <Link to={'/notifications'} className='notifications'><IoIosNotifications /> Notificações <span className='notifications-span'>{notifications.length}</span></Link>
+                <Link to={'/notifications'} className='notifications'><IoIosNotifications /> Notificações {notificationLength !== 0 && <span className='notifications-span'>{notificationLength}</span>}</Link>
                 <p onClick={() => handleLogout()}><RiLogoutBoxRFill/>  Logout</p>
             </nav>
             <ToastContainer position='bottom-left' />

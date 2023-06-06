@@ -4,19 +4,28 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { styled } from 'styled-components'
 import { IoIosLogOut, IoIosNotifications, IoIosPerson } from 'react-icons/io'
+import { lengthNotifications } from '../../../actions/lengthNotifications'
+import { useEffect } from 'react'
 
 export const Header = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
     const [show, setShow] = useState('none')
+    const [notificationLength, setNotificationLength] =  useState(0)
     const navigate = useNavigate()
     const userDefault = useSelector((state) => state.data)
+
     const handleClick = () => show === 'none' ? setShow('flex') : setShow('none')
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await lengthNotifications(user.id)
+            setNotificationLength(response)
+        }
+        fetchData()
+    }, [])
     const handleLogout = () => {
         localStorage.setItem('user', JSON.stringify(userDefault))
         navigate('/')
     }
-    const user = JSON.parse(localStorage.getItem('user'))
-    const notifications = JSON.parse(user.notification)
-
 
     return (
         <HeaderStyle>
@@ -28,7 +37,7 @@ export const Header = () => {
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}>Logout</p>
             </aside>
             <nav className='navigation'>
-                <Link to={'/notifications'}><span className='notifications-span'>{notifications.length}</span><IoIosNotifications className='icon-notifications'></IoIosNotifications></Link>
+                <Link to={'/notifications'}>{notificationLength !== 0 && <span className='notifications-span'>{notificationLength}</span>}<IoIosNotifications className='icon-notifications'></IoIosNotifications></Link>
                 <Link to={'/perfil/' + user.name + '/' + user.id}><IoIosPerson /></Link>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}><IoIosLogOut /></p>
             </nav>

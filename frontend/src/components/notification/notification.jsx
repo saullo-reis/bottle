@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
 import styled from "styled-components"
+import { viewNotification } from "../../actions/viewNotification"
 
 export const Notification = () => {
     const [ notifications, setNotifications ] = useState()
@@ -10,11 +11,12 @@ export const Notification = () => {
         const fetchData = async () => {
             const response = await axios.get("http://localhost:3333/getNotifications/"+user.id)
             setNotifications(JSON.parse(response.data.notification))
+            setTimeout(() => {
+                viewNotification(user.id)
+            },2000)
         }
         fetchData()
     },[])
-
-    console.log(notifications)
     
     return(
         <NotificationsStyle>
@@ -37,7 +39,7 @@ export const Notification = () => {
 const NotificationsStyle = styled.ul`
     padding-top: 100px;
     border: solid 1px black;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;

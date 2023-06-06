@@ -4,6 +4,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import {toast} from 'react-toastify'
 import { Link } from "react-router-dom"
+import { follow, followers, notificationFollow } from "../../actions/followsactions"
 
 export const FollowAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -22,33 +23,20 @@ export const FollowAdd = () => {
                     if (element.id === user.id) return false
                     for (let i = 0; i < follows?.length; i++) {
                         if (element.id === follows[i].id) return false
-
                     }
                     return true;
                 });
-
                 setUsers(response);
-            }
-            
+            } 
         }
-
         fetchData();
     },[filterUsers])
 
     const handleClick = async (element, index) => {
         try{
-            await axios.put('http://localhost:3333/follow/' + user.id, {
-                id: element.id,
-                email: element.email,
-                photo: element.photo,
-                name: element.name
-            })
-            await axios.put('http://localhost:3333/followers/' + element.id, {
-                id: user.id,
-                email: user.email,
-                photo: user.photo,
-                name: user.name
-            })
+            await follow(user, element)
+            await followers(user, element)
+            await notificationFollow(user, element)
             toast.success('Você seguiu '+ element.name)
             const people = document.getElementsByClassName('people')
             people[index].classList.add('animation')
