@@ -15,7 +15,7 @@ const register = (req, res) => {
 }
 
 const login = (req, res) => {
-    const q = 'SELECT id, email, password, photo, name FROM users WHERE email = ?'
+    const q = 'SELECT * FROM users WHERE email = ?'
     const { email, password } = req.body
 
     db.get(q, email, function (err, user) {
