@@ -25,7 +25,7 @@ const MainStyle = styled.section`
     flex-direction: column;
     align-items: center;
     background-color: #2F2E2E;
-    min-height: 100vh;
+    min-height: 80vh;
     main{
         min-height: 88vh;
         display: flex;
@@ -42,5 +42,4 @@ const MainStyle = styled.section`
             flex-direction: column;
         }  
     }      
-    
 `
