@@ -40,7 +40,7 @@ export const cleanNotifications = async (req, res) => {
     const allNotifications = JSON.parse(response.data.notification)
     
 
-    const visualized = allNotifications.map((element) => {
+    const visualized = allNotifications?.map((element) => {
         return {
             name: element.name,
             photo: element.photo,
