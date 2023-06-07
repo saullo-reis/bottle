@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { ButtonConfirm } from '../../styles/stylesComponents'
 import { LoginAndRegister } from '../../styles/stylesComponents';
+import { loginAction } from '../../actions/loginAndRegisterActions';
 
 
 export const Login = () => {
@@ -22,10 +23,7 @@ export const Login = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3333/login', {
-                email: data.email,
-                password: data.password
-            })
+            const response = await loginAction(data)
             localStorage.setItem('user', JSON.stringify(response.data));
             navigate('/feed')
         }

@@ -1,20 +1,20 @@
-import { Footer } from "../headerAndFooter/footer/Footer"
-import { Header } from "../headerAndFooter/header/Header"
-import { Perfil } from "../main/user/index"
-import { FollowAdd } from "../follows/Follows"
+import { Footer } from "../../headerAndFooter/footer/Footer"
+import { Header } from "../../headerAndFooter/header/Header"
+import { Perfil } from "../user"
+import { Posts } from "./posts"
+import { FollowAdd } from "../container-peoples/container-peoples"
 import { styled } from "styled-components"
-import { Notification } from "./notification"
 
-export const Notifications = () => {
-    return (
+export const Main = () => {
+    return(
         <MainStyle>
-            <Header />
+            <Header/>
             <main>
-                <Perfil />
-                <Notification/>
-                <FollowAdd />
+                <Perfil/>
+                <Posts />
+                <FollowAdd/>
             </main>
-            <Footer />
+            <Footer/>    
         </MainStyle>
     )
 }
@@ -42,4 +42,5 @@ const MainStyle = styled.section`
             flex-direction: column;
         }  
     }      
+    
 `

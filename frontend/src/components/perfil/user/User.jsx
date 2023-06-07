@@ -5,13 +5,14 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import { ButtonCancel, ButtonConfirm, Modal, ModalOverlay } from '../../../styles/stylesComponents'
-const userLocal = JSON.parse(localStorage.getItem('user'))
+
 
 
 export const PerfilUser = () => {
     const { name, id } = useParams()
     const [user, setUser] = useState()
     const [modal, setModal] = useState(false)
+    const userLocal = JSON.parse(localStorage.getItem('user'))
     const [editUser, setEditUser] = useState({
         userName: "",
         photo: userLocal.photo,

@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { ButtonConfirm, LoginAndRegister } from '../../../styles/stylesComponents'
+import { registerAction } from '../../../actions/loginAndRegisterActions';
 
 export const Register = () => {
     const navigate = useNavigate()
@@ -19,14 +20,8 @@ export const Register = () => {
             toast.error('Preencha todos os campos.')
             return
         }
-
         try{
-            await axios.post('http://localhost:3333/register', {
-                email: data.email,
-                name: data.name,
-                password: data.password,
-                photo: 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png'
-            })
+            await registerAction(data)
             toast.success(`Usuário ${data.name} cadastrado com sucesso.`)
             setTimeout(() => {
                 navigate('/login')

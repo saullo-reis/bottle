@@ -25,7 +25,6 @@ export const PerfilFollow = () => {
     },[id])
 
     const changeWindow = (path) => setWindowFollow(path)
-    console.log(followers, follows)
     return(
         <PerfilFollowStyle>
             <div>

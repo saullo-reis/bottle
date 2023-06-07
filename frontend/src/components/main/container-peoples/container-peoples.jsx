@@ -4,7 +4,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import {toast} from 'react-toastify'
 import { Link } from "react-router-dom"
-import { follow, followers, notificationFollow } from "../../actions/followsactions"
+import { follow, followers, notificationFollow } from "../../../actions/followsActions"
 
 export const FollowAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))

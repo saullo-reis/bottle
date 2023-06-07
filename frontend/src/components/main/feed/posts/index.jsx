@@ -1,25 +1,24 @@
 import { useEffect } from "react"
 import { useState } from "react"
-import axios from "axios"
-import moment from "moment-timezone"
+import { dateNow } from "../../../../actions/dateNow"
 import { Link } from "react-router-dom"
-import { ButtonConfirm, TextArea } from "../../../styles/stylesComponents"
+import { ButtonConfirm, TextArea } from "../../../../styles/stylesComponents"
 import styled from "styled-components"
-import { PostsStyle } from "../../../styles/stylesComponents"
+import { PostsStyle } from "../../../../styles/stylesComponents"
+import { getPosts, post } from "../../../../actions/postAndGetPosts"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
     const [content, setContent] = useState('')
     const [refresh, setRefresh] = useState(0)
-    const now = moment().tz("America/Sao_Paulo")
     const user = JSON.parse(localStorage.getItem('user'));
     const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get('http://localhost:3333/posts')
-            setPosts(response.data)
+            const response = await getPosts()
+            setPosts(response)
         }
         fetchData()
     }, [refresh])
@@ -27,36 +26,13 @@ export const Posts = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        setTimeout(() => {
-            axios.post('http://localhost:3333/post', {
-                name: user.name,
-                photo: user.photo,
-                content: content,
-                idUser: user.id
-            })
+        setTimeout(async () => {
+            await post(user, content)
             setRefresh(refresh + 1)
             setContent('')
             setIsLoading(false)
         }, 1000);
 
-    }
-
-    const dateNow = (date) => {
-        const utcDate = moment.utc(date)
-        const createdAt = utcDate.tz('America/Sao_Paulo')
-        const diff = moment.duration(now.diff(createdAt))
-        const minutesAgo = diff.asMinutes()
-        const roundedMinutesAgo = Math.round(minutesAgo)
-        if (roundedMinutesAgo === 0) {
-            return 'Postado agora'
-        }
-        if (roundedMinutesAgo >= 1440) {
-            return `Postado há ${Math.round(roundedMinutesAgo / 1440)} dias atrás`
-        }
-        if (roundedMinutesAgo >= 60) {
-            return `Postado há ${Math.round(roundedMinutesAgo / 60)} horas atrás`
-        }
-        return `Postado há ${roundedMinutesAgo} minutos atrás`
     }
 
     return (

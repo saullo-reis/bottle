@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
 import styled from "styled-components"
-import { viewNotification } from "../../actions/viewNotification"
+import { viewNotification } from "../../../actions/viewNotification"
 
 export const Notification = () => {
     const [ notifications, setNotifications ] = useState()
