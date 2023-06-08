@@ -4,10 +4,14 @@ import { Perfil } from "../user"
 import { Posts } from "./posts"
 import { FollowAdd } from "../container-peoples/container-peoples"
 import { styled } from "styled-components"
+import { useContext } from "react"
+import { ThemeContext } from "../../../theme-context/theme"
 
 export const Main = () => {
+
+    const {theme} = useContext(ThemeContext)
     return(
-        <MainStyle>
+        <MainStyle style={{backgroundColor: theme.background2}}>
             <Header/>
             <main>
                 <Perfil/>

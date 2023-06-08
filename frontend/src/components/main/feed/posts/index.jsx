@@ -6,6 +6,8 @@ import { ButtonConfirm, TextArea } from "../../../../styles/stylesComponents"
 import styled from "styled-components"
 import { PostsStyle } from "../../../../styles/stylesComponents"
 import { getPosts, post } from "../../../../actions/postAndGetPosts"
+import { useContext } from "react"
+import { ThemeContext } from "../../../../theme-context/theme"
 
 export const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -13,7 +15,7 @@ export const Posts = () => {
     const [refresh, setRefresh] = useState(0)
     const user = JSON.parse(localStorage.getItem('user'));
     const [isLoading, setIsLoading] = useState(false)
-
+    const {theme} = useContext(ThemeContext)
 
     useEffect(() => {
         async function fetchData() {
@@ -47,7 +49,7 @@ export const Posts = () => {
                 {
                     posts.map((element, index) => {
                         return (
-                            <li key={index}>
+                            <li key={index} style={{ backgroundColor: theme.background1 }}>
                                 <div>
                                     <Link to={'/perfil/' + element.name + '/' + element.id}><img src={element.photo}></img> </Link>
                                     <h3>@{element.name}</h3>

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from 'axios'
 import styled from "styled-components"
 import { viewNotification } from "../../../actions/viewNotification"
+import { ThemeContext } from "../../../theme-context/theme"
 
 export const Notification = () => {
     const [ notifications, setNotifications ] = useState()
     const user = JSON.parse(localStorage.getItem('user'))
-
+    const { theme } = useContext(ThemeContext)
+ 
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get("http://localhost:3333/getNotifications/"+user.id)
@@ -19,15 +21,15 @@ export const Notification = () => {
     },[])
     
     return(
-        <NotificationsStyle>
-            <h1>Notificações</h1>
+        <NotificationsStyle >
+            <h1 style={{ color: theme.color }}>Notificações</h1>
             {
                 notifications === null ? <h1>Nenhuma notificação.</h1> : 
                 notifications?.map((element, index) => {
                     return (
-                        <li key={index} style={{ backgroundColor: element.visualized === false ? "#2222EE" : "#121212"}}>
+                        <li key={index} style={{ backgroundColor: element.visualized === false ? "#2222EE" : theme.background2}}>
                             <img src={element.photo}></img>
-                            <p>{element.name} {element.text}</p>
+                            <p style={{color: theme.color}}>{element.name} {element.text}</p>
                         </li>
                     )
                 })

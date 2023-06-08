@@ -4,10 +4,13 @@ import { Perfil } from "../user/index"
 import { FollowAdd } from "../container-peoples/container-peoples"
 import { styled } from "styled-components"
 import { Notification } from "./notification"
+import { useContext } from "react"
+import { ThemeContext } from "../../../theme-context/theme"
 
 export const Notifications = () => {
+    const { theme } = useContext(ThemeContext)
     return (
-        <MainStyle>
+        <MainStyle style={{backgroundColor: theme.background2}}>
             <Header />
             <main>
                 <Perfil />
@@ -24,7 +27,6 @@ const MainStyle = styled.section`
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    background-color: #2F2E2E;
     min-height: 80vh;
     main{
         min-height: 88vh;

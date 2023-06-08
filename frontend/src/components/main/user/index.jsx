@@ -11,6 +11,8 @@ import { HiUser } from 'react-icons/hi'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { lengthNotifications } from '../../../actions/lengthNotifications'
+import { ThemeContext, themes } from '../../../theme-context/theme'
+import { useContext } from 'react'
 
 export const Perfil = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +22,7 @@ export const Perfil = () => {
     const navigate = useNavigate()
     const userDefault = useSelector((state) => state.data)
     const [notificationLength, setNotificationLength] = useState(0)
+    const {theme} = useContext(ThemeContext)
 
     useEffect(() => {
         if (!user.name) navigate('/')
@@ -106,7 +109,7 @@ export const Perfil = () => {
     }
 
     return (
-        <PerfilUserStyle>
+        <PerfilUserStyle >
             <ModalPhoto isOpen={isModalOpen} onClose={handleModalClose}>
                 {selectedImage && <img style={{ width: '190px' }} src={selectedImage} alt="Imagem selecionada" />}
                 <form onSubmit={handleClick} className='form'>
@@ -120,13 +123,13 @@ export const Perfil = () => {
                 <img className='perfil-photo' src={!image ? user.photo : image}></img>
             </PhotoHoverStyle>
             <div className='names'>
-                <h1 className='perfil-name'>{user.userName}</h1>
+                <h1 className='perfil-name' style={{ color: theme.color }}>{user.userName}</h1>
                 <p>@{user.name}</p>
             </div>
-            <nav>
-                <Link to={'/perfil/'+user.name+'/'+user.id}><HiUser/> Perfil</Link>
-                <Link to={'/notifications'} className='notifications'><IoIosNotifications /> Notificações {notificationLength !== 0 && <span className='notifications-span'>{notificationLength}</span>}</Link>
-                <p onClick={() => handleLogout()}><RiLogoutBoxRFill/>  Logout</p>
+            <nav >
+                <Link to={'/perfil/' + user.name + '/' + user.id} style={{ color: theme.color }}><HiUser/> Perfil</Link>
+                <Link to={'/notifications'} style={{ color: theme.color }}  className='notifications'><IoIosNotifications /> Notificações {notificationLength !== 0 && <span className='notifications-span'>{notificationLength}</span>}</Link>
+                <p onClick={() => handleLogout()} style={{ color: theme.color }}><RiLogoutBoxRFill/>  Logout</p>
             </nav>
             <ToastContainer position='bottom-left' />
         </PerfilUserStyle>

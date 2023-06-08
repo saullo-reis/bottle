@@ -6,6 +6,11 @@ import { styled } from 'styled-components'
 import { IoIosLogOut, IoIosNotifications, IoIosPerson } from 'react-icons/io'
 import { lengthNotifications } from '../../../actions/lengthNotifications'
 import { useEffect } from 'react'
+import { ThemeTogglerButton } from '../../theme-toggler-button/theme-toggler-button'
+import { useContext } from 'react'
+import { ThemeContext } from '../../../theme-context/theme'
+
+
 
 export const Header = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -13,7 +18,7 @@ export const Header = () => {
     const [notificationLength, setNotificationLength] =  useState(0)
     const navigate = useNavigate()
     const userDefault = useSelector((state) => state.data)
-
+    const { theme } = useContext(ThemeContext)
     const handleClick = () => show === 'none' ? setShow('flex') : setShow('none')
     useEffect(() => {
         const fetchData = async () => {
@@ -26,17 +31,18 @@ export const Header = () => {
         localStorage.setItem('user', JSON.stringify(userDefault))
         navigate('/')
     }
-
     return (
-        <HeaderStyle>
+        <HeaderStyle style={{backgroundColor: theme.background1, color: theme.color}}>
             <Link to={'/feed'}><h1 className="header-logo">Bottle</h1></Link>
             <button className='button-menu'><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
                 <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
+                <ThemeTogglerButton />
                 <Link to={'/notifications'} className='notifications'>Notificações</Link>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}>Logout</p>
             </aside>
             <nav className='navigation'>
+                <ThemeTogglerButton />
                 <Link to={'/notifications'}>{notificationLength !== 0 && <span className='notifications-span'>{notificationLength}</span>}<IoIosNotifications className='icon-notifications'></IoIosNotifications></Link>
                 <Link to={'/perfil/' + user.name + '/' + user.id}><IoIosPerson /></Link>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}><IoIosLogOut /></p>
@@ -52,7 +58,6 @@ const HeaderStyle = styled.section`
     align-items: center;
     position: fixed;
     justify-content: space-between;
-    background-color: #121212;
     color: #22e;
     z-index: 999;
     text-shadow: 0 1px 2px black;

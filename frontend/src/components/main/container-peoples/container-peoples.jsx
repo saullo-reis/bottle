@@ -5,12 +5,15 @@ import styled from "styled-components"
 import {toast} from 'react-toastify'
 import { Link } from "react-router-dom"
 import { follow, followers, notificationFollow } from "../../../actions/followsActions"
+import { useContext } from "react"
+import { ThemeContext } from "../../../theme-context/theme"
 
 export const FollowAdd = () => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [users, setUsers ] = useState([])
     const [filterUsers, setFilterUsers] = useState([])
-
+    const { theme } = useContext(ThemeContext)
+    
     useEffect(() => {
         async function fetchData() {
             const allUsers = await axios.get('http://localhost:3333/getUsers');
@@ -54,7 +57,7 @@ export const FollowAdd = () => {
     }
 
     return(
-        <FollowsStyle>
+        <FollowsStyle style={{backgroundColor: theme.background1}}>
             <h1>Usuários</h1>
             <input className="search-users" onChange={(e) => searchUsers(e.target.value)} placeholder='Digite o nome aqui'></input>
             <ul>

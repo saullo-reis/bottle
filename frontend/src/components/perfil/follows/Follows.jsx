@@ -1,13 +1,16 @@
 import axios from 'axios'
+import { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
+import { ThemeContext } from '../../../theme-context/theme'
 
 export const PerfilFollow = () => {
     const [followers, setFollowers] = useState([])
     const [follows, setFollows] = useState([])
     const { id } = useParams()
     const [windowFollow, setWindowFollow ] = useState('followers')
+    const { theme } = useContext(ThemeContext)
 
     useEffect(() => {
         const fetchData =  async () => {
@@ -33,7 +36,7 @@ export const PerfilFollow = () => {
             </div>
 
             {
-                windowFollow === 'followers' && <ul >
+                windowFollow === 'followers' && <ul style={{backgroundColor: theme.background1}} >
                     {
                         followers?.map((element, index) => {
                             return (
@@ -49,7 +52,7 @@ export const PerfilFollow = () => {
                 </ul> 
             }
             {
-                windowFollow === 'follows' && <ul >
+                windowFollow === 'follows' && <ul style={{ backgroundColor: theme.background1 }}>
                     {
                         follows?.map((element, index) => {
                             return (

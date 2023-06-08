@@ -1,9 +1,10 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { BiTrash, BiEdit } from 'react-icons/bi'
 import { Modal, ModalOverlay, ButtonCancel, ButtonConfirm, TextArea, PostsStyle } from '../../../styles/stylesComponents.js'
 import { toast, ToastContainer } from 'react-toastify'
+import { ThemeContext } from "../../../theme-context/theme.jsx"
 
 export const PerfilPosts = () => {
     const [posts, setPosts] = useState([])
@@ -13,7 +14,8 @@ export const PerfilPosts = () => {
     const [idPost, setIdPost] = useState(0)
     const user = JSON.parse(localStorage.getItem('user'))
     const [newContent, setNewContent ] = useState('')
-    
+    const { theme } = useContext(ThemeContext)
+
     useEffect(() => {
         async function fetchData() {
             const response = await axios.get('http://localhost:3333/getPosts', {
@@ -99,7 +101,7 @@ export const PerfilPosts = () => {
             {
                 posts.map((element, index) => {
                     return (
-                        <li className="posts-post" key={index}>
+                        <li style={{backgroundColor: theme.background1}}className="posts-post" key={index}>
                             <div className='posts-post-container'>
                                 {element.name === user.name &&
                                     <>

@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { styled } from "styled-components";
+import { ThemeContext } from "../../../theme-context/theme";
 
 export const Footer = () => {
+  const { theme } = useContext(ThemeContext)
   return (
-    <FooterStyle>
+    <FooterStyle style={{ backgroundColor: theme.background1}}>
       <p>
         Saullo Reis &copy; 2023
       </p>
@@ -16,7 +19,6 @@ const FooterStyle = styled.section`
     width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: #121212;
     p{
       color: #22e;
       text-shadow: none;

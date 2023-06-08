@@ -3,16 +3,20 @@ import { AppRoutes } from './pages/Routes'
 import { store } from './store'
 import { Provider} from 'react-redux'
 import { createGlobalStyle } from 'styled-components'
+import { ThemeProvider } from './theme-context/theme'
 
 function App() {
 
   return (
-    <Provider store={store}>
-      <GlobalStyle/>
+    <ThemeProvider>
+      <Provider store={store}>
+        <GlobalStyle />
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>
-    </Provider>
+      </Provider>
+    </ThemeProvider>
+    
   )
 }
 

@@ -1,10 +1,12 @@
 import axios from 'axios'
+import { useContext } from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 import { ButtonCancel, ButtonConfirm, Modal, ModalOverlay } from '../../../styles/stylesComponents'
+import { ThemeContext } from '../../../theme-context/theme'
 
 
 
@@ -13,6 +15,7 @@ export const PerfilUser = () => {
     const [user, setUser] = useState()
     const [modal, setModal] = useState(false)
     const userLocal = JSON.parse(localStorage.getItem('user'))
+    const { theme } = useContext(ThemeContext)
     const [editUser, setEditUser] = useState({
         userName: "",
         photo: userLocal.photo,
@@ -151,7 +154,7 @@ export const PerfilUser = () => {
             <img src={user?.photo}></img>
             <div className='container'>
                 <div className='names'>
-                    <h1>{user?.userName}</h1>
+                    <h1 style={{color: theme.color}}>{user?.userName}</h1>
                     <p>@{name}</p>
                 </div>
                 {userLocal.name === name ? <button onClick={handleOpenModal} >Editar perfil</button> : <button onClick={() => handleClick(user)}>Seguir</button>}
