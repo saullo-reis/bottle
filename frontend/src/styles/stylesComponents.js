@@ -230,6 +230,17 @@ const PostsStyle = styled.ul`
           padding: 5px;  
         }
     }
+    @media (max-width: 740px){
+        border: none;
+        padding: 0;
+        margin: 0;
+        ul{
+            width: 90%;
+        }
+        li{
+            width: 100%;
+        }
+    }
 `
 
 export { ButtonCancel, ButtonConfirm, Modal, ModalOverlay, TextArea, LoginAndRegister, PostsStyle }

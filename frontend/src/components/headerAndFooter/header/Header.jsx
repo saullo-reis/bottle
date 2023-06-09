@@ -36,8 +36,8 @@ export const Header = () => {
             <Link to={'/feed'}><h1 className="header-logo">Bottle</h1></Link>
             <button className='button-menu'><ImMenu onClick={() => handleClick()} /></button>
             <aside style={{ display: show }}>
-                <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
                 <ThemeTogglerButton />
+                <Link to={'/perfil/' + user.name + '/' + user.id}>Perfil</Link>
                 <Link to={'/notifications'} className='notifications'>Notificações</Link>
                 <p onClick={() => handleLogout()} style={{ color: 'red' }}>Logout</p>
             </aside>

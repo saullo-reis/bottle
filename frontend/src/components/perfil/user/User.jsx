@@ -154,7 +154,7 @@ export const PerfilUser = () => {
             <img src={user?.photo}></img>
             <div className='container'>
                 <div className='names'>
-                    <h1 style={{color: theme.color}}>{user?.userName}</h1>
+                    <h1 style={{ color: theme.color }}>{user?.userName}</h1>
                     <p>@{name}</p>
                 </div>
                 {userLocal.name === name ? <button onClick={handleOpenModal} >Editar perfil</button> : <button onClick={() => handleClick(user)}>Seguir</button>}
@@ -204,6 +204,8 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     font-size: 12px;
+    align-items: center;
+    justify-content: center;
     div{
         height: 100px;
         display: flex;
@@ -212,13 +214,14 @@ const Form = styled.form`
     }
     label{
          color: gray;
-         align-self:flex-start ;
+         align-self:center ;
     }
     .inputs{
         border: solid 1px #ccc;
         padding: 5px;
         border-radius: 32px;
         margin-bottom: 10px;
+        width: 280px;
 
     }
     .input-file{
